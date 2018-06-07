@@ -3,7 +3,7 @@
 //  xDiffCollection
 //
 //  Created by Esteban Garro on 2018-06-06.
-//  Copyright © 2018 transcriptics. All rights reserved.
+//  Copyright © 2018 aldo. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

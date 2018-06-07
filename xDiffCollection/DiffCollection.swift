@@ -3,7 +3,7 @@
 //  CollectionTest
 //
 //  Created by Esteban Garro on 2018-06-05.
-//  Copyright © 2018 transcriptics. All rights reserved.
+//  Copyright © 2018 aldo. All rights reserved.
 //
 
 import Foundation

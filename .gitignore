@@ -16,6 +16,7 @@ DerivedData/
 
 # Exclude personal Xcode user settings
 xcuserdata/
+*/project.xcworkspace/xcuserdata/ 
 
 *.xccheckout
 *.xcscmblueprint

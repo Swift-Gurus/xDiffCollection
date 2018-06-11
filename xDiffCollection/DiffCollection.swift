@@ -41,7 +41,7 @@ public struct DiffCollection<T:Hashable> : CustomStringConvertible {
     
     public init(filters:[DiffCollectionFilter<T>]) {
         for (idx, binFilter) in filters.enumerated() {
-            bins.append(CollectionBin(index: idx, filter: binFilter.filter, elements: []))
+            bins.append(CollectionBin(index: idx, elements: [], filter: binFilter.filter))
         }
     }
     
@@ -102,10 +102,14 @@ public struct DiffCollection<T:Hashable> : CustomStringConvertible {
         return nil
     }
     
-    public func numberOfElements(inSection binIndex:Int) -> Int? {
+    public func numberOfElements(inSection binIndex:Int) -> Int {
         if binIndex < bins.count {
             return bins[binIndex].count
         }
-        return nil
+        return 0
+    }
+    
+    public func numberOfSections() -> Int {
+        return bins.count
     }
 }

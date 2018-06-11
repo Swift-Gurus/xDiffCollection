@@ -16,8 +16,7 @@ fileprivate let object4 = CollectionTestObjectMock(value:"cocoon")
 
 class CollectionTestStatusTests: XCTestCase {
     
-    
-    var myCollection : DiffCollection<CollectionTestObjectMock>?
+    var tester : DiffCollectionTester! = nil
     
     override func setUp() {
         super.setUp()
@@ -50,7 +49,7 @@ class CollectionTestStatusTests: XCTestCase {
             return false
         })
         
-        myCollection = DiffCollection(filters: [f1,f2,f3,f4])
+        tester = DiffCollectionTester(collection:DiffCollection(filters: [f1,f2,f3,f4]))
     }
     
     override func tearDown() {
@@ -59,15 +58,14 @@ class CollectionTestStatusTests: XCTestCase {
     }
     
     func test_Fillup_Collection() {
-        _ = myCollection!.update(element: object1)
-        _ = myCollection!.update(element: object2)
-        _ = myCollection!.update(element: object3)
-        _ = myCollection!.update(element: object4)
-
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 2, section: 0)), object3)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 3, section: 0)), object4)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:0),
+                                    element:object1)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:1, section:0),
+                                    element:object2)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:2, section:0),
+                                    element:object3)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:3, section:0),
+                                    element:object4)
     }
 
     func test_Update_Element_That_Matches_No_Filter_Should_Return_Three_Empty_Arrays() {
@@ -76,15 +74,7 @@ class CollectionTestStatusTests: XCTestCase {
         var object = CollectionTestObjectMock(value: "NewObject")
         object.status = .other
         
-        let resp = myCollection!.update(element: object)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 2, section: 0)), object3)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 3, section: 0)), object4)
+        tester.testElementOperationMatchingNoFilterLeavesCollectionUnchanged(element: object)
     }
     
     func test_Update_Status_Should_Delete_From_And_Add_To_Bin() {
@@ -93,36 +83,22 @@ class CollectionTestStatusTests: XCTestCase {
         var objectClone = object3
         objectClone.status = .old
         
-        var resp = myCollection!.update(element: objectClone)
-        XCTAssertEqual(resp.added, [IndexPath(row: 0, section: 1)])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [IndexPath(row: 2, section: 0)])
-
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 1)), objectClone)
-        
-        
+        tester.testElementIsAddedAtAndDeletedFrom(element: objectClone,
+                                                  at: IndexPath(row: 0, section: 1),
+                                                  from: IndexPath(row: 2, section: 0))
         objectClone.status = .hot
-        resp = myCollection!.update(element: objectClone)
-        XCTAssertEqual(resp.added, [IndexPath(row: 0, section: 2)])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [IndexPath(row: 0, section: 1)])
         
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 2)), objectClone)
+        
+        tester.testElementIsAddedAtAndDeletedFrom(element: objectClone,
+                                                  at: IndexPath(row: 0, section: 2),
+                                                  from: IndexPath(row: 0, section: 1))
     }
 
     func test_Delete_Non_Existing_Item_Should_Return_Three_Empty_Arrays() {
         test_Fillup_Collection()
         
         let object = CollectionTestObjectMock(value: "NewObject")
-        
-        let resp = myCollection!.delete(element: object)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 2, section: 0)), object3)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 3, section: 0)), object4)
+
+        tester.testElementOperationMatchingNoFilterLeavesCollectionUnchanged(element: object, isDelete: true)
     }
 }

@@ -16,7 +16,7 @@ If the element was already there an update operation is performed and the logic 
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
 
-  s.author             = { "Esteban Garro" => "egarro@aldogroup.com" }
+  s.author             = { "Aldo iOS Dev Team" => "aldodev@aldogroup.com" }
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -29,7 +29,7 @@ If the element was already there an update operation is performed and the logic 
   
   #  When using multiple platforms
   s.ios.deployment_target = "8.0"
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4' }
+
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

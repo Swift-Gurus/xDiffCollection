@@ -15,12 +15,11 @@ fileprivate let object3 = CollectionTestObjectMock(value:"bacon")
 fileprivate let object4 = CollectionTestObjectMock(value:"cocoon")
 
 class CollectionTestTests: XCTestCase {
-    
-    var myCollection : DiffCollection<CollectionTestObjectMock>?
-    
+    var tester : DiffCollectionTester! = nil
+        
     override func setUp() {
         super.setUp()
-
+        
         let f1 = DiffCollectionFilter<CollectionTestObjectMock>(name: "Starts with a", filter:{ s in
             if(s.value.starts(with: "a")) {
                 return true
@@ -42,7 +41,7 @@ class CollectionTestTests: XCTestCase {
             return false
         })
         
-        myCollection = DiffCollection(filters: [f1,f2,f3])
+        tester = DiffCollectionTester(collection:DiffCollection(filters: [f1,f2,f3]))
     }
     
     override func tearDown() {
@@ -52,99 +51,27 @@ class CollectionTestTests: XCTestCase {
     
     func test_Fillup_Collection() {
         
-        var resp = myCollection!.update(element: object1)
-        XCTAssertEqual(resp.added, [IndexPath(row: 0, section: 0)])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
-
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),1)
-        
-        resp = myCollection!.update(element: object2)
-        XCTAssertEqual(resp.added, [IndexPath(row: 1, section: 0)])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), object2)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),2)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),0)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),0)
-        
-        resp = myCollection!.update(element: object3)
-        XCTAssertEqual(resp.added, [IndexPath(row: 0, section: 1)])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 1)), object3)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),2)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),0)
-        
-        resp = myCollection!.update(element: object4)
-        XCTAssertEqual(resp.added, [IndexPath(row: 0, section: 2)])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object1)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 1)), object3)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 2)), object4)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),2)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),1)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:0),
+                                             element:object1)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:1, section:0),
+                                             element:object2)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:1),
+                                             element:object3)
+        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:2),
+                                             element:object4)
     }
 
     func test_Deleting_From_Collection() {
         test_Fillup_Collection()
         
-        var resp = myCollection!.delete(element: object1)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [IndexPath(row: 0, section: 0)])
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 1)), object3)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 2)), object4)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),1)
-        
-        resp = myCollection!.delete(element: object3)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [IndexPath(row: 0, section: 1)])
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object2)
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 2)), object4)
-        XCTAssertNil(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 1)))
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),0)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),1)
-        
-        
-        resp = myCollection!.delete(element: object4)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [IndexPath(row: 0, section: 2)])
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)), object2)
-        XCTAssertNil(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 2)))
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),0)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),0)
-        
-        resp = myCollection!.delete(element: object2)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [IndexPath(row: 0, section: 0)])
-        
-        XCTAssertNil(myCollection!.element(atIndexPath: IndexPath(row: 0, section: 0)))
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),0)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),0)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),0)
+        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:0),
+                                        element:object1)
+        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:1),
+                                        element:object3)
+        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:2),
+                                        element:object4)
+        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:0),
+                                        element:object2)        
     }
 
     func test_Update_Collection() {
@@ -153,14 +80,7 @@ class CollectionTestTests: XCTestCase {
         var objectClone = object2
         objectClone.status = .cold
         
-        let resp = myCollection!.update(element: objectClone)
-        XCTAssert(resp.added.count == 0)
-        XCTAssertEqual(resp.updated, [IndexPath(row: 1, section: 0)])
-        XCTAssert(resp.deleted.count == 0)
-        
-        XCTAssertEqual(myCollection!.element(atIndexPath: IndexPath(row: 1, section: 0)), objectClone)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:0),2)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:1),1)
-        XCTAssertEqual(myCollection!.numberOfElements(inSection:2),1)
+        tester.testElementIsUpdatedAt(indexPath:IndexPath(row:1, section:0),
+                                      element:objectClone)
     }
 }

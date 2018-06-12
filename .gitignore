@@ -1,0 +1,52 @@
+#file system
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# Exclude personal Xcode user settings
+xcuserdata/
+xDiffCollection.xcodeproj/xcuserdata/
+
+*.xccheckout
+*.xcscmblueprint
+*.moved-aside
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+profile
+.idea/
+
+# Pods - for those of you who use CocoaPods
+#Pods
+
+# IMPORTANT: If you committed to the git repository before you added this .gitignore file
+# you need to delete the excluded files manually from your git repository, to ensure, 
+# that they are not tracked anymore. To delete them from git, just do the following:
+# 
+#     git rm --cached FILENAME
+#
+# ... Then everything should be fine.
+
+Interface.storyboard
+LaunchScreen.xib
+Main.storyboard
+Localization.h

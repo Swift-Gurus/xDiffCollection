@@ -25,6 +25,44 @@ to a bin where the updated element passes another's bin logic.
 - `func numberOfElements(inSection binIndex:Int) -> Int`
 - `func numberOfSections() -> Int`
 
+## Example
+After installing xDiffCollection, just include it via:
+```ruby
+import xDiffCollection
+```
+Create some DiffCollectionFilters:
+```ruby
+let f1 = DiffCollectionFilter<TestObject>(name: "Starts with a", filter:{ s in
+    if(s.value.starts(with: "a")) {
+        return true
+    }
+    return false
+})
+        
+let f2 = DiffCollectionFilter<TestObject>(name: "Starts with b", filter:{ s in
+    if(s.value.starts(with: "b")) {
+        return true
+    }
+    return false
+})
+
+let f3 = DiffCollectionFilter<TestObject>(name: "Starts with c", filter:{ s in
+    if(s.value.starts(with: "c")) {
+        return true
+    }
+    return false
+})
+```
+Instanciate your collection using those filters:
+```ruby
+let myCollection = DiffCollection(filters: [f1,f2,f3])
+```
+And start using your collection:
+
+```ruby
+myCollection.update(element: TestObject())
+```
+
 ## Installation
 
 xDiffCollection is available through [CocoaPods](https://cocoapods.org). To install

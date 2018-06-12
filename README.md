@@ -60,8 +60,19 @@ let myCollection = DiffCollection(filters: [f1,f2,f3])
 And start using your collection:
 
 ```ruby
-myCollection.update(element: TestObject())
+let result : DiffCollectionResult = myCollection.update(element: TestObject())
 ```
+Where
+
+```ruby
+public struct DiffCollectionResult {
+    public var deleted: [IndexPath]
+    public var added: [IndexPath]
+    public var updated: [IndexPath]
+}
+```
+And IndexPath.section represents the storage bin in myCollection,
+and IndexPath.row the position of an element within its bin. 
 
 ## Installation
 

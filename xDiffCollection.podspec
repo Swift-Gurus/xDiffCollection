@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "xDiffCollection"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "xDiffCollection serves as a data storage of hashable objects to easily add, update and delete"
 
   s.description  = <<-DESC

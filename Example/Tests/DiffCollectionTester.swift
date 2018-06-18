@@ -10,8 +10,6 @@ import Foundation
 import XCTest
 @testable import xDiffCollection
 
-
-
 final class DiffCollectionTester {
     var myCollection : DiffCollection<CollectionTestObjectMock>
     
@@ -19,33 +17,28 @@ final class DiffCollectionTester {
         self.myCollection = collection
     }
     
-    
-    
-    func testElementIsAddedAtAndDeletedFrom(element     object:CollectionTestObjectMock,
-                                            at     atIndexPath:IndexPath,
-                                            from fromIndexPath:IndexPath,
+
+    func testElementIsAddedAtAndDeletedFrom(element object: CollectionTestObjectMock,
+                                            at atIndexPath: IndexPath,
+                                            from fromIndexPath: IndexPath,
                                             file: StaticString = #file,
                                             line: UInt = #line) {
         
-        var currentNumberOfElements : [Int] = []
-        let numberOfSections = myCollection.numberOfSections()
-        for i in 0..<numberOfSections {
-            currentNumberOfElements.append(myCollection.numberOfElements(inSection: i))
-        }
+        let currentNumberOfElements = myCollection.map({ $0.count })
         
-        let resp = myCollection.update(element: object)
-        XCTAssertEqual(resp.added, [atIndexPath])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [fromIndexPath])
+        let resp = myCollection.update(with: object)
+        XCTAssertEqual(resp.addedIndexes, [atIndexPath])
+        XCTAssert(resp.updatedIndexes.count == 0)
+        XCTAssertEqual(resp.removedIndexes, [fromIndexPath])
         
-        XCTAssertEqual(myCollection.element(atIndexPath: atIndexPath), object)
+        XCTAssertEqual(myCollection[atIndexPath], object)
         
-        for i in 0..<numberOfSections {
+        for i in 0..<myCollection.count {
             if (atIndexPath.section == i) {
-                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i]+1)
+                XCTAssertEqual(myCollection.element(at: i)?.count,currentNumberOfElements[i]+1)
             }
             if (fromIndexPath.section == i) {
-                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i]-1)
+                XCTAssertEqual(myCollection.element(at: i)?.count,currentNumberOfElements[i]-1)
             }
         }
     }
@@ -56,18 +49,13 @@ final class DiffCollectionTester {
                                                                        line: UInt = #line) {
     
         var (currentMatrix, _) = self.returnCurrentState()
-        let numberOfBins = myCollection.numberOfSections()
+        let numberOfBins = myCollection.count
         
-        var resp : DiffCollectionResult? = nil
-        if isDelete {
-            resp = myCollection.delete(element: object)
-        } else {
-            resp = myCollection.update(element: object)
-        }
-        
-        XCTAssert(resp!.added.count == 0)
-        XCTAssert(resp!.updated.count == 0)
-        XCTAssert(resp!.deleted.count == 0)
+
+        let resp = myCollection.update(with: object)
+
+        XCTAssert(resp.updatedIndexes.count == 0, file: file, line: line)
+        XCTAssert(resp.removedIndexes.count == 0, file: file, line: line)
         
         for i in 0..<numberOfBins {
             let numberOfElementsInSection = myCollection.numberOfElements(inSection: i)
@@ -78,28 +66,27 @@ final class DiffCollectionTester {
     }
     
     func testElementIsAddedAt(indexPath:IndexPath,
-                              element object:CollectionTestObjectMock,
+                              element object: CollectionTestObjectMock,
                               file: StaticString = #file,
                               line: UInt = #line) {
 
-        var currentNumberOfElements : [Int] = []
-        let numberOfSections = myCollection.numberOfSections()
-        for i in 0..<numberOfSections {
-            currentNumberOfElements.append(myCollection.numberOfElements(inSection: i))
-        }
+        let numberOfSections = myCollection.count
+        let currentNumberOfElements = myCollection.map({ $0.count })
+
+        let resp = myCollection.update(with: object)
+        XCTAssertEqual(resp.addedIndexes, [indexPath], file: file, line: line)
+        XCTAssert(resp.updatedIndexes.count == 0,file: file, line: line)
+        XCTAssert(resp.removedIndexes.count == 0,file: file, line: line)
         
-        let resp = myCollection.update(element: object)
-        XCTAssertEqual(resp.added, [indexPath])
-        XCTAssert(resp.updated.count == 0)
-        XCTAssert(resp.deleted.count == 0)
+        XCTAssertEqual(myCollection.element(atIndexPath: indexPath), object,file: file, line: line)
         
-        XCTAssertEqual(myCollection.element(atIndexPath: indexPath), object)
+        
         
         for i in 0..<numberOfSections {
             if (indexPath.section == i) {
-                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i]+1)
+                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i]+1,file: file, line: line)
             } else {
-                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i])
+                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i],file: file, line: line)
             }
         }
     }
@@ -115,62 +102,22 @@ final class DiffCollectionTester {
             currentNumberOfElements.append(myCollection.numberOfElements(inSection: i))
         }
         
-        let resp = myCollection.update(element: object)
-        XCTAssert(resp.added.count == 0)
-        XCTAssertEqual(resp.updated, [indexPath])
-        XCTAssert(resp.deleted.count == 0)
+        let resp = myCollection.update(with: object)
+        XCTAssert(resp.addedIndexes.count == 0, file: file, line: line)
+        XCTAssertEqual(resp.updatedIndexes, [indexPath], file: file, line: line)
+        XCTAssert(resp.removedIndexes.count == 0, file: file, line: line)
         
-        XCTAssertEqual(myCollection.element(atIndexPath: indexPath), object)
+        XCTAssertEqual(myCollection[indexPath], object, file: file, line: line)
         
         for i in 0..<numberOfSections {
             XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i])
         }
     }
-    
-    func testElementIsDeletedFrom(indexPath:IndexPath,
-                                  element object:CollectionTestObjectMock,
-                                  file: StaticString = #file,
-                                  line: UInt = #line) {
-        
-        var (currentMatrix, currentNumberOfElements) = self.returnCurrentState()
-    
-        let resp = myCollection.delete(element: object)
-        XCTAssert(resp.added.count == 0)
-        XCTAssert(resp.updated.count == 0)
-        XCTAssertEqual(resp.deleted, [indexPath])
-
-        let numberOfBins = myCollection.numberOfSections()
-        for i in 0..<numberOfBins {
-            let numberOfElementsInSection = myCollection.numberOfElements(inSection: i)
-            if (indexPath.section == i) {
-                for j in 0..<numberOfElementsInSection {
-                    if j < indexPath.row {
-                        XCTAssertEqual(myCollection.element(atIndexPath: IndexPath(row: j, section: i)), currentMatrix[i][j])
-                    } else {
-                        XCTAssertEqual(myCollection.element(atIndexPath: IndexPath(row: j, section: i)), currentMatrix[i][j+1])
-                    }
-                }
-            } else {
-                for j in 0..<numberOfElementsInSection {
-                  XCTAssertEqual(myCollection.element(atIndexPath: IndexPath(row: j, section: i)), currentMatrix[i][j])
-                }
-            }
-        }
-
-        
-        for i in 0..<numberOfBins {
-            if (indexPath.section == i) {
-                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i]-1)
-            } else {
-                XCTAssertEqual(myCollection.numberOfElements(inSection:i),currentNumberOfElements[i])
-            }
-        }
-    }
-    
+ 
     fileprivate func returnCurrentState() -> ([[CollectionTestObjectMock]],[Int]) {
         var currentNumberOfElements : [Int] = []
         var resp : [[CollectionTestObjectMock]] = []
-        let numberOfBins = myCollection.numberOfSections()
+        let numberOfBins = myCollection.count
         for i in 0..<numberOfBins {
             let numberOfElementsInBin = myCollection.numberOfElements(inSection: i)
             currentNumberOfElements.append(numberOfElementsInBin)

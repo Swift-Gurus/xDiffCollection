@@ -12,11 +12,12 @@
 		1FDF70F9B14ED29F67217298B44A4FED /* xDiffCollection-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A60601756161AD44866200E5A44D51C3 /* xDiffCollection-dummy.m */; };
 		230615D1547CDE5D2C085F5A2F08CBA7 /* MutableCollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DAD0F70CF170F274B0F3BB7B65C744 /* MutableCollectionExtensions.swift */; };
 		2E7B2A8659AEE3941E613521653E1623 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039D508800273E9762CAC103513A21C5 /* Foundation.framework */; };
-		36DA398E9BDAD2C5D78E3084D274774A /* BinOperationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EF6A7E07D77B34693F69218363B4EFB /* BinOperationType.swift */; };
 		5613B4B9B6E3C93AFF1F0FAE1D79F235 /* xDiffCollection-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B970E9EB61D1A0FF65ADCC0169191ED9 /* xDiffCollection-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5D4275B74B045460016C2D63CB7A8077 /* CollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867DB40AFF4AB1A963C007C75D8E6FD4 /* CollectionExtensions.swift */; };
 		70B88D7141F50963A7DBCC45F92E4F02 /* Pods-xDiffCollection_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 654B685607AFD4713484C1B5AF37D39B /* Pods-xDiffCollection_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		771F17284290391BACFD2F5FCB5FECDA /* SwiftyCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084EB4CFDF869B14DFD188FCCE48398B /* SwiftyCollection.framework */; };
+		897B01E520D828600025007F /* BinUpdateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897B01E420D828600025007F /* BinUpdateResult.swift */; };
+		897B01E720D828830025007F /* CollectionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897B01E620D828830025007F /* CollectionChanges.swift */; };
 		9FAF9FE50F4FD6063D332547F053FF9B /* SwiftyCollection-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD988878952E299C961A2A680A7E3E1 /* SwiftyCollection-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAEE2E7B0AD5F39524D99843E92E31C6 /* RangeReplaceableCollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557B6380CFCC963B52565196FEA6B25 /* RangeReplaceableCollectionExtensions.swift */; };
 		CE9F2836FB2DCB4BF875639B3BD00A8D /* Pods-xDiffCollection_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 971260CA61FB31524D33BAB97170A98A /* Pods-xDiffCollection_Tests-dummy.m */; };
@@ -55,32 +56,33 @@
 		227491850B0892F524E84F2FD0AA0C18 /* Pods-xDiffCollection_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-xDiffCollection_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		289A67B6BDF7D0943AD1A7FC8AEF139C /* xDiffCollection.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = xDiffCollection.modulemap; sourceTree = "<group>"; };
 		28E88F5EE16C90CD27444C5F5E1FD2B7 /* SwiftyCollection-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyCollection-dummy.m"; sourceTree = "<group>"; };
-		2BCC98888048B6816A6C42D52464E401 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		2BCC98888048B6816A6C42D52464E401 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2CD988878952E299C961A2A680A7E3E1 /* SwiftyCollection-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyCollection-umbrella.h"; sourceTree = "<group>"; };
 		353B97F20822E2028589871241C46C68 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3557B6380CFCC963B52565196FEA6B25 /* RangeReplaceableCollectionExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RangeReplaceableCollectionExtensions.swift; path = SwiftyCollection/Classes/RangeReplaceableCollectionExtensions.swift; sourceTree = "<group>"; };
 		5065B53EE7A7B502A1F0064174E53F34 /* CollectionBin.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CollectionBin.swift; path = xDiffCollection/Classes/CollectionBin.swift; sourceTree = "<group>"; };
 		5BF49E37554B10C70781A6837B9AEAFE /* Pods-xDiffCollection_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-xDiffCollection_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		5D0C3CE1288FE9C2F3A6C307A1340A19 /* Pods_xDiffCollection_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_xDiffCollection_Tests.framework; path = "Pods-xDiffCollection_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EF6A7E07D77B34693F69218363B4EFB /* BinOperationType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BinOperationType.swift; path = xDiffCollection/Classes/BinOperationType.swift; sourceTree = "<group>"; };
+		5D0C3CE1288FE9C2F3A6C307A1340A19 /* Pods_xDiffCollection_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xDiffCollection_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		654B685607AFD4713484C1B5AF37D39B /* Pods-xDiffCollection_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-xDiffCollection_Tests-umbrella.h"; sourceTree = "<group>"; };
 		6A860097C8D2FFCEFF220C01BD890717 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		867DB40AFF4AB1A963C007C75D8E6FD4 /* CollectionExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CollectionExtensions.swift; path = SwiftyCollection/Classes/CollectionExtensions.swift; sourceTree = "<group>"; };
 		877A11A2687BB9258FD213BFB09A650C /* Pods-xDiffCollection_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-xDiffCollection_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		897B01E420D828600025007F /* BinUpdateResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinUpdateResult.swift; sourceTree = "<group>"; };
+		897B01E620D828830025007F /* CollectionChanges.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionChanges.swift; sourceTree = "<group>"; };
 		9390F4873F896827CE175DDC8217E823 /* SwiftyCollection.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyCollection.xcconfig; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		971260CA61FB31524D33BAB97170A98A /* Pods-xDiffCollection_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-xDiffCollection_Tests-dummy.m"; sourceTree = "<group>"; };
 		97CC846964CC6D45651B85896073BC3E /* SwiftyCollection-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyCollection-prefix.pch"; sourceTree = "<group>"; };
 		A60601756161AD44866200E5A44D51C3 /* xDiffCollection-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "xDiffCollection-dummy.m"; sourceTree = "<group>"; };
 		AD8A0CC4408DA2DC615A877B0A32088E /* xDiffCollection-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "xDiffCollection-prefix.pch"; sourceTree = "<group>"; };
-		AFB51B6D231CD8D37B3C3975D741952F /* xDiffCollection.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; path = xDiffCollection.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		AFB51B6D231CD8D37B3C3975D741952F /* xDiffCollection.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; path = xDiffCollection.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B970E9EB61D1A0FF65ADCC0169191ED9 /* xDiffCollection-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "xDiffCollection-umbrella.h"; sourceTree = "<group>"; };
-		C63B4282672F9D0FF7E83BA507C77AFA /* xDiffCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = xDiffCollection.framework; path = xDiffCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C63B4282672F9D0FF7E83BA507C77AFA /* xDiffCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xDiffCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FCFBF3870DBCFDC1C1FF85D3AB6992 /* Pods-xDiffCollection_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-xDiffCollection_Tests-resources.sh"; sourceTree = "<group>"; };
 		CDED11DB14428FAAB1F56909BB3F0743 /* SwiftyCollection.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftyCollection.modulemap; sourceTree = "<group>"; };
 		CE2DE74D1CD72F60DFE158DAF373E76B /* Pods-xDiffCollection_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-xDiffCollection_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
-		D843181016C1C5797A23260EFA731CBD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
-		D9A66303FDFC37AA0C62F754A28FFFA4 /* SwiftyCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyCollection.framework; path = SwiftyCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D843181016C1C5797A23260EFA731CBD /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D9A66303FDFC37AA0C62F754A28FFFA4 /* SwiftyCollection.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyCollection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E57837B9D0F4D370682C1F064B7B283A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E8DAD0F70CF170F274B0F3BB7B65C744 /* MutableCollectionExtensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MutableCollectionExtensions.swift; path = SwiftyCollection/Classes/MutableCollectionExtensions.swift; sourceTree = "<group>"; };
 		EEFD29C7C85A015413EB1D95454BCFF9 /* xDiffCollection.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = xDiffCollection.xcconfig; sourceTree = "<group>"; };
@@ -121,11 +123,12 @@
 		06E84972682C83CD575F23CBC55402E1 /* xDiffCollection */ = {
 			isa = PBXGroup;
 			children = (
-				5EF6A7E07D77B34693F69218363B4EFB /* BinOperationType.swift */,
 				5065B53EE7A7B502A1F0064174E53F34 /* CollectionBin.swift */,
 				FC6E06C78ACDDBB987C9BE0FBD12A5B1 /* DiffCollection.swift */,
 				CCC0FEC6FBC25A348F1A3181B80BA753 /* Pod */,
 				9592A3D71ADF7AD425DD86896223314D /* Support Files */,
+				897B01E420D828600025007F /* BinUpdateResult.swift */,
+				897B01E620D828830025007F /* CollectionChanges.swift */,
 			);
 			name = xDiffCollection;
 			path = ../..;
@@ -215,7 +218,6 @@
 				3557B6380CFCC963B52565196FEA6B25 /* RangeReplaceableCollectionExtensions.swift */,
 				6D1D4D6DBC55C21497C3C20107ECD971 /* Support Files */,
 			);
-			name = SwiftyCollection;
 			path = SwiftyCollection;
 			sourceTree = "<group>";
 		};
@@ -398,10 +400,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				36DA398E9BDAD2C5D78E3084D274774A /* BinOperationType.swift in Sources */,
 				15E1CFDE31529E88601D2FA0F01E07AC /* CollectionBin.swift in Sources */,
+				897B01E520D828600025007F /* BinUpdateResult.swift in Sources */,
 				F012B05B2E18E8E80B782AF935CEA152 /* DiffCollection.swift in Sources */,
 				1FDF70F9B14ED29F67217298B44A4FED /* xDiffCollection-dummy.m in Sources */,
+				897B01E720D828830025007F /* CollectionChanges.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

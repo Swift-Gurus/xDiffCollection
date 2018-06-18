@@ -7,88 +7,91 @@
 //
 
 import Foundation
+import SwiftyCollection
 
-internal protocol CollectionFiltering {
-    func filter<T:Hashable>(_ element:T) -> Bool
-}
+public typealias CollectionFilter<T> = (T) -> Bool
 
-internal struct CollectionBin<T: Hashable>: CollectionFiltering, CustomStringConvertible {
-
-    var index : Int
-    var elements: Array<T> = []
-    var filter:(T)-> Bool
-    var description: String {
-        var resp = ""
-        for (idx, element) in self.elements.enumerated() {
-            resp += "\(idx))\t\(element.hashValue)\n"
-        }
-        return resp
-    }
-    var count : Int {
-        return elements.count
+public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collection where Backstorage.Element == T {
+    
+    public typealias Index = Backstorage.Index
+    public typealias Element = T
+    public var startIndex: Backstorage.Index { return _backstorage.startIndex }
+    
+    public var endIndex: Backstorage.Index { return _backstorage.endIndex }
+    
+    private var _backstorage: Backstorage
+    
+    private var _filter: CollectionFilter<T>
+    
+    public init(collection: Backstorage,
+                filter: CollectionFilter<T>? = nil) {
+        
+        self._backstorage = collection
+        self._filter = filter != nil ? filter! : { _ in return true }
     }
     
-    init(index: Int, elements: Array<T>, filter: @escaping (T)->Bool) {
-        self.index = index
-        self.filter = filter
-        self.elements = elements
+    public func index(after i: Backstorage.Index) -> Backstorage.Index {
+        return _backstorage.index(after: i)
     }
     
-    func filter<T>(_ element:T) -> Bool {
-        return self.filter(element)
+    public subscript(position: Backstorage.Index) -> T {
+        return _backstorage[position]
     }
     
-    func updated(_ element:T) -> (CollectionBin<T>, BinResult) {
-        var copy = elements
-        if let idx = self.contains(element) {
-            copy[idx] = element
-            return (CollectionBin(index: self.index, elements: copy, filter: self.filter),BinResult(type: .updated, idx: idx))
-        } else {
-            copy.append(element)
-            return (CollectionBin(index: self.index, elements: copy, filter: self.filter),BinResult(type: .added, idx: copy.count-1))
-        }
-    }
     
-    func removed(_ element:T) -> (CollectionBin<T>, BinResult) {
-        var copy = elements
-        if let idx = self.contains(element) {
-            copy.remove(at: idx)
-            return (CollectionBin(index: self.index, elements: copy, filter: self.filter),BinResult(type: .deleted, idx: idx))
-        }
-        return (CollectionBin(index: self.index, elements: copy, filter: self.filter),BinResult(type: .none, idx: -1))
-    }
-    
-    func contains(_ element:T) -> Int? {
-        if let idx = elements.index(where: { $0.hashValue == element.hashValue }) {
-            return idx
-        }
-        return nil
-    }
-    
-    func element(at index:Int) -> T? {
-        if index < elements.count {
-            return elements[index]
+    public func updating(_ element: T,
+                         whereUnique unique: CollectionFilter<T>,
+                         whereCompare compare: CollectionFilter<T>) -> BinUpdateResult<T, CollectionBin> {
+        
+        let idx = self.index(where: unique)
+        
+        guard _filter(element) else {
+            return idx.map({ removingResult(for: $0, where: unique) })  ?? unchagedBinResut
         }
         
-        return nil
+        guard let index = idx, let currentElement = self.element(at: index) else {
+            return BinUpdateResult(bin: appendingElement(element), changes: CollectionChanges(addedIndexes: [endIndex]))
+        }
+        
+        return compare(currentElement) ? unchagedBinResut : BinUpdateResult(bin: replacingElement(element, at: index) ,
+                                                                            changes: CollectionChanges(updatedIndexes: [index]))
+    }
+    
+    
+    public func updating(with elements: Backstorage) -> CollectionBin {
+        return CollectionBin(collection: elements, filter: _filter)
+    }
+    
+    
+    private var unchagedBinResut: BinUpdateResult<T, CollectionBin> {
+        return BinUpdateResult(bin: self)
+    }
+    
+    private func appendingElement(_ element: T) -> CollectionBin {
+        return updating(with: _backstorage + [element])
+    }
+    
+    
+    private func removingResult(for index: Index, where predicate: CollectionFilter<T>) -> BinUpdateResult<T, CollectionBin>  {
+        return BinUpdateResult(bin: updating(with: _backstorage.removing(at: index)),
+                               changes: CollectionChanges(removedIndexes: [index]))
+    }
+    
+    private func replacingElement(_ element: T, at index: Index) -> CollectionBin {
+        
+        return updating(with: _backstorage.replacing(with: element, at: index ))
     }
 }
 
 
-extension CollectionBin: Collection {
-    typealias Element = T
-    typealias Index = Array<T>.Index
-    
-    func index(after i: Index) -> Index {
-        return elements.index(after: i)
+public extension CollectionBin where T: Equatable & Hashable  {
+    public func updating(_ element: T) -> BinUpdateResult<T, CollectionBin> {
+        return updating(element, whereUnique: { $0.hashValue == element.hashValue }, whereCompare: { $0 == element})
     }
-    
-    subscript(position: Index) -> T {
-        return elements[position]
+}
+
+extension CollectionBin where Element: CustomStringConvertible {
+    public var description: String {
+        return _backstorage.map({ "\($0.description)"}).joined(separator: "\n")
     }
-    
-    
-    var startIndex: Index { return elements.startIndex}
-    
-    var endIndex: Index { return elements.endIndex }
 }

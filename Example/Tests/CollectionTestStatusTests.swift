@@ -93,12 +93,4 @@ class CollectionTestStatusTests: XCTestCase {
                                                   at: IndexPath(row: 0, section: 2),
                                                   from: IndexPath(row: 0, section: 1))
     }
-
-    func test_Delete_Non_Existing_Item_Should_Return_Three_Empty_Arrays() {
-        test_Fillup_Collection()
-        
-        let object = CollectionTestObjectMock(value: "NewObject")
-
-        tester.testElementOperationMatchingNoFilterLeavesCollectionUnchanged(element: object, isDelete: true)
-    }
 }

@@ -12,10 +12,11 @@ internal protocol CollectionFiltering {
     func filter<T:Hashable>(_ element:T) -> Bool
 }
 
-internal struct CollectionBin<T:Hashable> : CollectionFiltering, CustomStringConvertible {
+internal struct CollectionBin<T: Hashable>: CollectionFiltering, CustomStringConvertible {
+
     var index : Int
-    var elements:Array<T> = []
-    var filter:(T)->Bool
+    var elements: Array<T> = []
+    var filter:(T)-> Bool
     var description: String {
         var resp = ""
         for (idx, element) in self.elements.enumerated() {
@@ -71,4 +72,23 @@ internal struct CollectionBin<T:Hashable> : CollectionFiltering, CustomStringCon
         
         return nil
     }
+}
+
+
+extension CollectionBin: Collection {
+    typealias Element = T
+    typealias Index = Array<T>.Index
+    
+    func index(after i: Index) -> Index {
+        return elements.index(after: i)
+    }
+    
+    subscript(position: Index) -> T {
+        return elements[position]
+    }
+    
+    
+    var startIndex: Index { return elements.startIndex}
+    
+    var endIndex: Index { return elements.endIndex }
 }

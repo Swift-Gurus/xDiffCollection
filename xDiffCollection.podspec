@@ -24,11 +24,11 @@ If the element was already there an update operation is performed and the logic 
   #  the deployment target. You can optionally include the target after the platform.
   #
   
-  s.platform     = :ios, "10.0"
+  s.platform     = :ios, '11.0'
   s.swift_version   = '4.0'
   
   #  When using multiple platforms
-  s.ios.deployment_target = "8.0"
+  s.ios.deployment_target = '11.0'
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -39,5 +39,6 @@ If the element was already there an update operation is performed and the logic 
 
   s.source           = { :git => 'https://github.com/aldo-dev/xDiffCollection.git', :tag => s.version.to_s }
   s.source_files = 'xDiffCollection/**/*'
+  s.dependency 'SwiftyCollection'
 
 end

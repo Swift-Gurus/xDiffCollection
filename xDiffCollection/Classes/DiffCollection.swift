@@ -8,13 +8,14 @@
 
 import Foundation
 
+
 public struct DiffCollectionResult {
     public var deleted : [IndexPath]
     public var added   : [IndexPath]
     public var updated : [IndexPath]
 }
 
-public struct DiffCollectionFilter<T:Hashable> {
+public struct DiffCollectionFilter<T: Hashable> {
     public let name : String
     public var filter:(T)->Bool
     
@@ -24,7 +25,7 @@ public struct DiffCollectionFilter<T:Hashable> {
     }
 }
 
-public struct DiffCollection<T:Hashable> : CustomStringConvertible {
+public struct DiffCollection<T: Hashable>: CustomStringConvertible {
     private var bins:[CollectionBin<T>] = []
     private init(bins:[CollectionBin<T>]) {
         self.bins = bins
@@ -95,14 +96,14 @@ public struct DiffCollection<T:Hashable> : CustomStringConvertible {
                                       updated: [])
     }
     
-    public func element(atIndexPath path:IndexPath) -> T? {
+    public func element(atIndexPath path: IndexPath) -> T? {
         if path.section < bins.count {
             return bins[path.section].element(at: path.row)
         }
         return nil
     }
     
-    public func numberOfElements(inSection binIndex:Int) -> Int {
+    public func numberOfElements(inSection binIndex: Int) -> Int {
         if binIndex < bins.count {
             return bins[binIndex].count
         }
@@ -113,3 +114,8 @@ public struct DiffCollection<T:Hashable> : CustomStringConvertible {
         return bins.count
     }
 }
+
+//extension DiffCollection: Collection {
+//    typealias Element = Collection where Element.Element == T
+//}
+

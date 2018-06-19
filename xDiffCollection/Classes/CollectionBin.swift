@@ -46,14 +46,14 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
         let idx = self.index(where: unique)
         
         guard _filter(element) else {
-            return idx.map({ removingResult(for: $0, where: unique) })  ?? unchagedBinResut
+            return idx.map({ removingResult(for: $0, where: unique) })  ?? unchangedBinResult
         }
         
         guard let index = idx, let currentElement = self.element(at: index) else {
             return BinUpdateResult(bin: appendingElement(element), changes: CollectionChanges(addedIndexes: [endIndex]))
         }
         
-        return compare(currentElement) ? unchagedBinResut : BinUpdateResult(bin: replacingElement(element, at: index) ,
+        return compare(currentElement) ? unchangedBinResult : BinUpdateResult(bin: replacingElement(element, at: index) ,
                                                                             changes: CollectionChanges(updatedIndexes: [index]))
     }
     
@@ -63,7 +63,7 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
     }
     
     
-    private var unchagedBinResut: BinUpdateResult<T, CollectionBin> {
+    private var unchangedBinResult: BinUpdateResult<T, CollectionBin> {
         return BinUpdateResult(bin: self)
     }
     

@@ -93,4 +93,5 @@ class CollectionTestStatusTests: XCTestCase {
                                                   at: IndexPath(row: 0, section: 2),
                                                   from: IndexPath(row: 0, section: 1))
     }
+    
 }

@@ -42,8 +42,8 @@ final class DiffCollectionTester {
             }
         }
     }
-    
-    func testElementOperationMatchingNoFilterLeavesCollectionUnchanged(element object:CollectionTestObjectMock,
+
+    func testElementOperationMatchingNoFilterLeavesCollectionUnchanged(element object: CollectionTestObjectMock,
                                                                        isDelete: Bool = false,
                                                                        file: StaticString = #file,
                                                                        line: UInt = #line) {
@@ -64,6 +64,8 @@ final class DiffCollectionTester {
             }
         }
     }
+    
+    
     
     func testElementIsAddedAt(indexPath:IndexPath,
                               element object: CollectionTestObjectMock,

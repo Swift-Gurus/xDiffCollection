@@ -92,8 +92,7 @@ public extension DiffCollection where C == [CollectionBin<T,[T]>] {
 
         let result = self.map({ $0.updating(element) })
         
-       let changes =  result.lazy
-                            .map({ $0.changes })
+       let changes =  result.map({ $0.changes })
                             .enumerated()
                             .map({ convertChanges($0.element, for: $0.offset) })
                             .reduce(DiffCollectionResult()) { (partial, result) -> DiffCollectionResult in
@@ -133,6 +132,7 @@ extension Diff: MutableCollection {}
 
 extension Diff where C == [CollectionBin<T,[T]>] {
 
+    @discardableResult
     mutating func update(with element: T) -> DiffCollectionResult {
         let updateResult =  self.updating(with: element)
         self = updateResult.collection

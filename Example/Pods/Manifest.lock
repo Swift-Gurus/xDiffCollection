@@ -1,6 +1,6 @@
 PODS:
   - SwiftyCollection (1.0.0)
-  - xDiffCollection (1.0.0):
+  - xDiffCollection (1.1.0):
     - SwiftyCollection
 
 DEPENDENCIES:
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   SwiftyCollection: 7f708298ca501d0aa280e03b1d3e56b553ebabea
-  xDiffCollection: 8b872cbf42f92e5738dd0eb95c4f404a1383d142
+  xDiffCollection: 453395524badda7e29aaba391aa28360a37c7bdf
 
 PODFILE CHECKSUM: b8002585b032f88b6603b1b8494644d19f04e849
 

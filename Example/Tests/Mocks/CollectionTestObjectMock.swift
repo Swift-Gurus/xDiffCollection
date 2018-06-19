@@ -29,8 +29,8 @@ struct CollectionTestObjectMock: Hashable, Equatable {
                 lhs.status    == rhs.status
     }
     
-    init(value:String) {
+    init(value: String, status: ObjectStatus = .new) {
         self.value = value
-        self.status = .new
+        self.status = status
     }
 }

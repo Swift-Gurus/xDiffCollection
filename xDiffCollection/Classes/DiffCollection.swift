@@ -133,7 +133,7 @@ extension Diff: MutableCollection {}
 extension Diff where C == [CollectionBin<T,[T]>] {
 
     @discardableResult
-    mutating func update(with element: T) -> DiffCollectionResult {
+    public mutating func update(with element: T) -> DiffCollectionResult {
         let updateResult =  self.updating(with: element)
         self = updateResult.collection
         return updateResult.changes

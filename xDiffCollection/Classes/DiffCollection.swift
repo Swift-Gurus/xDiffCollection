@@ -10,14 +10,17 @@ import Foundation
 import SwiftyCollection
 
 public typealias DiffCollectionResult = CollectionChanges<IndexPath, [IndexPath]>
+public typealias DiffCollectionSort<T> = (T,T) -> Bool
 
 public struct DiffCollectionFilter<T: Hashable> {
     public let name : String
     public var filter:(T)->Bool
+    public var sort:((T,T)->Bool)?
     
-    public init(name: String, filter: @escaping (T)->Bool) {
+    public init(name: String, filter: @escaping (T)->Bool, sort: DiffCollectionSort<T>? = nil ) {
         self.name = name
         self.filter = filter
+        self.sort = sort
     }
 }
 
@@ -79,11 +82,10 @@ public struct Diff<T, C>: Collection where T: Equatable & Hashable, C: RangeRepl
     }
 }
 
-
 public extension DiffCollection where C == [CollectionBin<T,[T]>] {
     init(filters: [DiffCollectionFilter<T>]) {
         
-        let collection: [CollectionBin<T,[T]>] = filters.map({ CollectionBin(collection: [], filter: $0.filter) })
+        let collection: [CollectionBin<T,[T]>] = filters.map({ CollectionBin(collection: [], filter: $0.filter, sort: $0.sort) })
     
         _backstorage = collection
     }

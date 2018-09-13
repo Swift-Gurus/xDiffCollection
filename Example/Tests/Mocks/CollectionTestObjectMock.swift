@@ -19,18 +19,21 @@ enum ObjectStatus {
 struct CollectionTestObjectMock: Hashable, Equatable {
     var value : String
     var status: ObjectStatus
+    var rank : Int
     
     var hashValue : Int {
-        return value.hashValue
+        return value.hashValue + rank
     }
     
     static func == (lhs: CollectionTestObjectMock, rhs: CollectionTestObjectMock) -> Bool {
         return  lhs.hashValue == rhs.hashValue &&
-                lhs.status    == rhs.status
+                lhs.status    == rhs.status &&
+                lhs.rank      == rhs.rank
     }
     
-    init(value: String, status: ObjectStatus = .new) {
+    init(value: String, status: ObjectStatus = .new, rank : Int = 0) {
         self.value = value
         self.status = status
+        self.rank = rank
     }
 }

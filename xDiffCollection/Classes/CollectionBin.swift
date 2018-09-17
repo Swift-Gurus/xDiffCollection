@@ -55,11 +55,13 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
         }
         
         guard let index = idx, let currentElement = self.element(at: index) else {
-            return BinUpdateResult(bin: appendingElement(element), changes: CollectionChanges(addedIndexes: [endIndex]))
+            let (collection, insertionIndex) = appendingElement(element)
+            return BinUpdateResult(bin: collection,
+                                   changes: CollectionChanges(addedIndexes: [_backstorage.index(startIndex, offsetBy: insertionIndex)]))
         }
         
         return compare(currentElement) ? unchangedBinResult : BinUpdateResult(bin: replacingElement(element, at: index) ,
-                                                                            changes: CollectionChanges(updatedIndexes: [index]))
+                                                                              changes: CollectionChanges(updatedIndexes: [index]))
     }
     
     
@@ -72,12 +74,13 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
         return BinUpdateResult(bin: self)
     }
     
-    private func appendingElement(_ element: T) -> CollectionBin {
+    private func appendingElement(_ element: T) -> (CollectionBin, Int) {
         var resp = _backstorage + [element]
+        var idx = _backstorage.count
         if _sort != nil && _backstorage.count > 0 {
-           resp = linearInsert(element)
+           (resp,idx) = linearInsert(element)
         }
-        return updating(with: resp)
+        return (updating(with: resp),idx)
     }
     
     
@@ -92,15 +95,17 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
     }
     
     //Linear insert function assumes that optional _sort is NOT nil
-    private func linearInsert(_ element:T) -> Backstorage {
+    private func linearInsert(_ element:T) -> (Backstorage,Int) {
         var inserted = false
         
         var resp = Backstorage()
+        var insertionIdx = 0
         //Do a linear search for the proper place for insertation:
-        for e in _backstorage {
+        for (idx, e) in _backstorage.enumerated() {
             if _sort!(e,element) && !inserted {
                 resp.append(element)
                 inserted = true
+                insertionIdx = idx
                 //We don't break from the loop because we continue inserting the rest of the backstorage after element
             }
             resp.append(e)
@@ -108,10 +113,11 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
         
         //If element has not been inserted, insert it at the end:
         if !inserted {
+            insertionIdx = resp.count
             resp.append(element)
         }
         
-        return resp
+        return (resp,insertionIdx)
     }
 }
 

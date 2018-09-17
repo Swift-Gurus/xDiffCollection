@@ -51,8 +51,28 @@ class CollectionTestSortingTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
+/*
+
+Desired result after sorting:
+Section 0:
+     fileprivate let object9 = CollectionTestObjectMock(value:"zulu",rank:130)
+     fileprivate let object10 = CollectionTestObjectMock(value:"zulu",rank:230)
+     fileprivate let object11 = CollectionTestObjectMock(value:"zulu",rank:330)
+     fileprivate let object12 = CollectionTestObjectMock(value:"zulu",rank:430)
+     fileprivate let object1 = CollectionTestObjectMock(value:"apple",rank:110)
+     fileprivate let object2 = CollectionTestObjectMock(value:"apple",rank:210)
+     fileprivate let object3 = CollectionTestObjectMock(value:"apple",rank:310)
+     fileprivate let object4 = CollectionTestObjectMock(value:"apple",rank:410)
+Section 1:
+     fileprivate let object8 = CollectionTestObjectMock(value:"bacon",rank:420)
+     fileprivate let object7 = CollectionTestObjectMock(value:"bacon",rank:320)
+     fileprivate let object6 = CollectionTestObjectMock(value:"bacon",rank:220)
+     fileprivate let object5 = CollectionTestObjectMock(value:"bacon",rank:120)
+
+*/
     
-    //Add elements in random orders:
+
+    //Add all elements in random order:
     func test_Fillup_Collection() {
         tester.testAdd(element: object4)
         tester.testAdd(element: object7)
@@ -71,43 +91,56 @@ class CollectionTestSortingTests: XCTestCase {
     func test_Filters_Providing_Sorting_Function_Must_Always_Remain_Sorted() {
         test_Fillup_Collection()
 
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 0, section: 0), element: object9)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 1, section: 0), element: object10)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 2, section: 0), element: object11)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 3, section: 0), element: object12)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 4, section: 0), element: object1)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 5, section: 0), element: object2)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 6, section: 0), element: object3)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 7, section: 0), element: object4)
-        
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 0, section: 1), element: object8)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 1, section: 1), element: object7)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 2, section: 1), element: object6)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 3, section: 1), element: object5)
+        //After filling up collection, elements must be in sorted order, not in insertion order:
+        let sortedOrder = [ [object9,object10,object11,object12,object1,object2,object3,object4],
+                            [object8,object7,object6,object5]
+                          ]
+        XCTAssertEqual(sortedOrder, tester.myCollection.compactMap({ $0.map({$0}) }))
     }
     
     func test_Adding_a_New_Object_Must_Inserted_at_Proper_Index() {
         test_Fillup_Collection()
+
+
+        let objectA = CollectionTestObjectMock(value: "zapato", status: .new, rank: 150)
+        //Must insert after element (zulu,430) at (4,0):
+        var sortedOrder = [ [object9,object10,object11,object12,objectA,object1,object2,object3,object4],
+                            [object8,object7,object6,object5]
+        ]
         
-        var object = CollectionTestObjectMock(value: "zapato", status: .new, rank: 150)
-        tester.testAdd(element: object)
+        var resp = tester.testAdd(element: objectA)
+        XCTAssertEqual(sortedOrder, tester.myCollection.compactMap({ $0.map({$0}) }))
         
-        //Must insert after element (zulu,430) at (4,0)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 4, section: 0), element: object)
+        XCTAssertEqual(resp.addedIndexes, [IndexPath(row: 4, section: 0)])
+        XCTAssert(resp.updatedIndexes.count == 0)
+        XCTAssert(resp.removedIndexes.count == 0)
+
         
+        //Must insert at the very begining of section 0 at (0,0)
+        let objectB = CollectionTestObjectMock(value: "zynching", status: .new, rank: 150)
+        sortedOrder = [[objectB,object9,object10,object11,object12,objectA,object1,object2,object3,object4],
+                       [object8,object7,object6,object5]
+        ]
+
+        resp = tester.testAdd(element: objectB)
+        XCTAssertEqual(sortedOrder, tester.myCollection.compactMap({ $0.map({$0} )}))
+
+        XCTAssertEqual(resp.addedIndexes, [IndexPath(row: 0, section: 0)])
+        XCTAssert(resp.updatedIndexes.count == 0)
+        XCTAssert(resp.removedIndexes.count == 0)
+
         
-        object = CollectionTestObjectMock(value: "zynching", status: .new, rank: 150)
-        tester.testAdd(element: object)
+        //Must insert at the second section after (bacon,420) (1,1)
+        let objectC = CollectionTestObjectMock(value: "bacon", status: .new, rank: 370)
+        sortedOrder = [[objectB,object9,object10,object11,object12,objectA,object1,object2,object3,object4],
+                       [object8,objectC,object7,object6,object5]
+        ]
         
-        //Must insert at the very begining at (0,0)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 0, section: 0), element: object)
+        resp = tester.testAdd(element: objectC)
+        XCTAssertEqual(sortedOrder, tester.myCollection.compactMap({ $0.map({$0} )}))
         
-        
-        object = CollectionTestObjectMock(value: "bacon", status: .new, rank: 370)
-        tester.testAdd(element: object)
-        
-        //Must insert at the very begining at the second section after (bacon,420) (1,1)
-        tester.testElementAtIndexPathIsEqualTo(indexPath: IndexPath(row: 1, section: 1), element: object)
+        XCTAssertEqual(resp.addedIndexes, [IndexPath(row: 1, section: 1)])
+        XCTAssert(resp.updatedIndexes.count == 0)
+        XCTAssert(resp.removedIndexes.count == 0)
     }
-    
 }

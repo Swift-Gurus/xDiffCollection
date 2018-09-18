@@ -17,7 +17,6 @@ final class DiffCollectionTester {
         self.myCollection = collection
     }
     
-
     func testElementIsAddedAtAndDeletedFrom(element object: CollectionTestObjectMock,
                                             at atIndexPath: IndexPath,
                                             from fromIndexPath: IndexPath,
@@ -65,7 +64,27 @@ final class DiffCollectionTester {
         }
     }
     
+    @discardableResult
+    func testAdd(element object:CollectionTestObjectMock,
+                            file: StaticString = #file,
+                            line: UInt = #line) -> DiffCollectionResult {
+        
+         let currentNumberOfElements = myCollection.reduce(0, { $0 + $1.count })
+         let resp = myCollection.update(with: object)
+         let newNumberOfElements = myCollection.reduce(0, { $0 + $1.count })
+        
+         XCTAssert(newNumberOfElements == currentNumberOfElements + 1, file: file, line: line)
+         return resp
+    }
     
+    func testElementAtIndexPathIsEqualTo(indexPath:IndexPath,
+                                         element object: CollectionTestObjectMock,
+                                         file: StaticString = #file,
+                                         line: UInt = #line) {
+    
+        let e = myCollection[indexPath.section][indexPath.row]
+        XCTAssertEqual(e, object, file: file, line: line)
+    }
     
     func testElementIsAddedAt(indexPath:IndexPath,
                               element object: CollectionTestObjectMock,

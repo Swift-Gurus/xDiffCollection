@@ -102,7 +102,7 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
         var insertionIdx = 0
         //Do a linear search for the proper place for insertation:
         for (idx, e) in _backstorage.enumerated() {
-            if _sort!(e,element) && !inserted {
+            if _sort!(element,e) && !inserted {
                 resp.append(element)
                 inserted = true
                 insertionIdx = idx

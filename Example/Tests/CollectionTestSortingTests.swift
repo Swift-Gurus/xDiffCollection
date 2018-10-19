@@ -35,7 +35,7 @@ class CollectionTestSortingTests: XCTestCase {
                 return true
             }
             return false
-        }) { return $0.value < $1.value || ($0.value == $1.value && $0.rank > $1.rank) }
+        }) { return $0.value > $1.value || ($0.value == $1.value && $0.rank < $1.rank) }
         
         //Sort by rank descending
         let f2 = DiffCollectionFilter<CollectionTestObjectMock>(name: "Value starts with b", filter:{ s in
@@ -43,7 +43,7 @@ class CollectionTestSortingTests: XCTestCase {
                 return true
             }
             return false
-        }) { return $0.rank < $1.rank }
+        }) { return $0.rank > $1.rank }
         
         tester = DiffCollectionTester(collection:DiffCollection(filters: [f1,f2]))
     }

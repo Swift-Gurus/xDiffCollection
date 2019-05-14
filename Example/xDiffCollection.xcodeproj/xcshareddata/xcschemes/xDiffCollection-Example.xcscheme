@@ -46,7 +46,7 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C11D7C6250B8E62C8E74DCFDCCFD5D88"
+            BlueprintIdentifier = "475B040CE69BAA7E85C354293C72ADE6"
             BuildableName = "xDiffCollection.framework"
             BlueprintName = "xDiffCollection"
             ReferencedContainer = "container:Pods/Pods.xcodeproj">

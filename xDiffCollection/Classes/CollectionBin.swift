@@ -48,7 +48,7 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
                          whereUnique unique: CollectionFilter<T>,
                          whereCompare compare: CollectionFilter<T>) -> BinUpdateResult<T, CollectionBin> {
         
-        let idx = self.index(where: unique)
+        let idx = self.firstIndex(where: unique)
         
         guard _filter(element) else {
             return idx.map({ removingResult(for: $0, where: unique) })  ?? unchangedBinResult
@@ -123,7 +123,7 @@ public struct CollectionBin<T, Backstorage: RangeReplaceableCollection>: Collect
 
 
 public extension CollectionBin where T: Equatable & Hashable  {
-    public func updating(_ element: T) -> BinUpdateResult<T, CollectionBin> {
+    func updating(_ element: T) -> BinUpdateResult<T, CollectionBin> {
         return updating(element, whereUnique: { $0.hashValue == element.hashValue }, whereCompare: { $0 == element})
     }
 }

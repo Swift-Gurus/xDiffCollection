@@ -35,7 +35,7 @@ public struct Diff<T, C>: Collection where T: Equatable & Hashable, C: RangeRepl
     
   
     public typealias Element = C.Element
-    public typealias Index = C.Index
+    public typealias IndexType = C.Index
     
     var _backstorage: C
     
@@ -109,17 +109,17 @@ public extension DiffCollection where C == [CollectionBin<T,[T]>] {
     
     
     
-    private func convertChanges(_ changes: CollectionChanges<Index, [Index]>, for section: Int) -> DiffCollectionResult {
+    private func convertChanges(_ changes: CollectionChanges<C.Index, [C.Index]>, for section: Int) -> DiffCollectionResult {
         return DiffCollectionResult(updatedIndexes: tranformIndexes(changes.updatedIndexes, forSection: section),
                                     removedIndexes: tranformIndexes(changes.removedIndexes, forSection: section),
                                     addedIndexes: tranformIndexes(changes.addedIndexes, forSection: section))
     }
     
-    private func tranformIndexes(_ indexes: [Index], forSection section: Int) -> [IndexPath] {
+    private func tranformIndexes(_ indexes: [C.Index], forSection section: Int) -> [IndexPath] {
         return indexes.map({ transformIntoIndexPath(index: $0, forSection: section) } )
     }
     
-    private func transformIntoIndexPath(index: Index, forSection section: Int) -> IndexPath {
+    private func transformIntoIndexPath(index: C.Index, forSection section: Int) -> IndexPath {
         return IndexPath(row: index, section: section)
     }
     

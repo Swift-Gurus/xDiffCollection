@@ -25,7 +25,7 @@ If the element was already there an update operation is performed and the logic 
   #
   
   s.platform     = :ios, '11.0'
-  s.swift_version   = '4.0'
+  s.swift_version   = '5.0'
   
   #  When using multiple platforms
   s.ios.deployment_target = '11.0'

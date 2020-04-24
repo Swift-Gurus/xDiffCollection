@@ -12,11 +12,10 @@ xDiffCollection exposes two operations: update and delete. update can also add a
 If the element was already there an update operation is performed and the logic in the bin is re-run to decide if this is still the appropriate bin for that updated element. If it is not, the element is deleted from the current bin and moved to a bin where the updated element passes another's bin logic.
                    DESC
 
-  s.homepage     = "http://www.transcriptics.com"
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
 
-  s.author             = { "Aldo iOS Dev Team" => "aldodev@aldogroup.com" }
+  s.author             = { "Swift Gurus" => "alexei.hmelevski@aldogroup.com" }
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -37,7 +36,7 @@ If the element was already there an update operation is performed and the logic 
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source           = { :git => 'https://github.com/aldo-dev/xDiffCollection.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/swift-gurus/xDiffCollection.git', :tag => s.version.to_s }
   s.source_files = 'xDiffCollection/**/*'
   s.dependency 'SwiftyCollection'
 

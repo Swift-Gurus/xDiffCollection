@@ -18,7 +18,7 @@
 		771F17284290391BACFD2F5FCB5FECDA /* SwiftyCollection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 084EB4CFDF869B14DFD188FCCE48398B /* SwiftyCollection.framework */; };
 		8928DC2B20D8B6B100AA3E04 /* CollectionChanges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8928DC2720D8B69600AA3E04 /* CollectionChanges.swift */; };
 		89B3DED024528BF2002EFC89 /* BinUpdateResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3DECF24528BF2002EFC89 /* BinUpdateResult.swift */; };
-		89B3DED224529755002EFC89 /* DiffCollectionSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3DED124529755002EFC89 /* DiffCollectionSnapshot.swift */; };
+		89B3DED424530ADA002EFC89 /* DiffCollectionSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3DED324530ADA002EFC89 /* DiffCollectionSnapshot.swift */; };
 		9FAF9FE50F4FD6063D332547F053FF9B /* SwiftyCollection-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 2CD988878952E299C961A2A680A7E3E1 /* SwiftyCollection-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AAEE2E7B0AD5F39524D99843E92E31C6 /* RangeReplaceableCollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3557B6380CFCC963B52565196FEA6B25 /* RangeReplaceableCollectionExtensions.swift */; };
 		CE9F2836FB2DCB4BF875639B3BD00A8D /* Pods-xDiffCollection_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 971260CA61FB31524D33BAB97170A98A /* Pods-xDiffCollection_Tests-dummy.m */; };
@@ -72,7 +72,7 @@
 		877A11A2687BB9258FD213BFB09A650C /* Pods-xDiffCollection_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-xDiffCollection_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8928DC2720D8B69600AA3E04 /* CollectionChanges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollectionChanges.swift; path = xDiffCollection/Classes/CollectionChanges.swift; sourceTree = "<group>"; };
 		89B3DECF24528BF2002EFC89 /* BinUpdateResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BinUpdateResult.swift; path = xDiffCollection/Classes/BinUpdateResult.swift; sourceTree = "<group>"; };
-		89B3DED124529755002EFC89 /* DiffCollectionSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiffCollectionSnapshot.swift; sourceTree = "<group>"; };
+		89B3DED324530ADA002EFC89 /* DiffCollectionSnapshot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiffCollectionSnapshot.swift; path = xDiffCollection/Classes/DiffCollectionSnapshot.swift; sourceTree = "<group>"; };
 		9390F4873F896827CE175DDC8217E823 /* SwiftyCollection.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyCollection.xcconfig; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		971260CA61FB31524D33BAB97170A98A /* Pods-xDiffCollection_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-xDiffCollection_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -214,11 +214,11 @@
 		B16B4BC2EB37F98DD807DAF985E9F965 /* xDiffCollection */ = {
 			isa = PBXGroup;
 			children = (
+				89B3DED324530ADA002EFC89 /* DiffCollectionSnapshot.swift */,
 				89B3DECF24528BF2002EFC89 /* BinUpdateResult.swift */,
 				8928DC2720D8B69600AA3E04 /* CollectionChanges.swift */,
 				B8C0CA8AF3C6AA0FD697287386DE6268 /* CollectionBin.swift */,
 				24FF96F48524AF90D2EACA87CC95FC5B /* DiffCollection.swift */,
-				89B3DED124529755002EFC89 /* DiffCollectionSnapshot.swift */,
 				21F29E591FE35A836E53BFF8019E4DD6 /* Pod */,
 				72DDDF4F6111DA4D259B2ADD5D6956A0 /* Support Files */,
 			);
@@ -395,7 +395,7 @@
 			files = (
 				45200AE5353A83ECEB74C840967C40CF /* CollectionBin.swift in Sources */,
 				DFD08AD76AECE72E902B43C62E2BA502 /* DiffCollection.swift in Sources */,
-				89B3DED224529755002EFC89 /* DiffCollectionSnapshot.swift in Sources */,
+				89B3DED424530ADA002EFC89 /* DiffCollectionSnapshot.swift in Sources */,
 				89B3DED024528BF2002EFC89 /* BinUpdateResult.swift in Sources */,
 				53D250E1F883839CB2859969847534D5 /* xDiffCollection-dummy.m in Sources */,
 				8928DC2B20D8B6B100AA3E04 /* CollectionChanges.swift in Sources */,

@@ -13,9 +13,8 @@ If the element was already there an update operation is performed and the logic 
                    DESC
 
   s.license      = { :type => "MIT", :file => "LICENSE" }
-
-
   s.author             = { "Swift Gurus" => "alexei.hmelevski@aldogroup.com" }
+  s.homepage         = 'https://github.com/Swift-Gurus/xDiffCollection.git'
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

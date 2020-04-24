@@ -26,9 +26,9 @@ final class DiffCollectionTester {
         let currentNumberOfElements = myCollection.map({ $0.count })
         
         let resp = myCollection.update(with: object)
-        XCTAssertEqual(resp.addedIndexes, [atIndexPath])
-        XCTAssert(resp.updatedIndexes.count == 0)
-        XCTAssertEqual(resp.removedIndexes, [fromIndexPath])
+        XCTAssertEqual(resp.changes.addedIndexes, [atIndexPath])
+        XCTAssert(resp.changes.updatedIndexes.count == 0)
+        XCTAssertEqual(resp.changes.removedIndexes, [fromIndexPath])
         
         XCTAssertEqual(myCollection[atIndexPath], object)
         
@@ -53,8 +53,8 @@ final class DiffCollectionTester {
 
         let resp = myCollection.update(with: object)
 
-        XCTAssert(resp.updatedIndexes.count == 0, file: file, line: line)
-        XCTAssert(resp.removedIndexes.count == 0, file: file, line: line)
+        XCTAssert(resp.changes.updatedIndexes.count == 0, file: file, line: line)
+        XCTAssert(resp.changes.removedIndexes.count == 0, file: file, line: line)
         
         for i in 0..<numberOfBins {
             let numberOfElementsInSection = myCollection.numberOfElements(inSection: i)
@@ -74,7 +74,7 @@ final class DiffCollectionTester {
          let newNumberOfElements = myCollection.reduce(0, { $0 + $1.count })
         
          XCTAssert(newNumberOfElements == currentNumberOfElements + 1, file: file, line: line)
-         return resp
+         return resp.changes
     }
     
     func testElementAtIndexPathIsEqualTo(indexPath:IndexPath,
@@ -95,9 +95,9 @@ final class DiffCollectionTester {
         let currentNumberOfElements = myCollection.map({ $0.count })
 
         let resp = myCollection.update(with: object)
-        XCTAssertEqual(resp.addedIndexes, [indexPath], file: file, line: line)
-        XCTAssert(resp.updatedIndexes.count == 0,file: file, line: line)
-        XCTAssert(resp.removedIndexes.count == 0,file: file, line: line)
+        XCTAssertEqual(resp.changes.addedIndexes, [indexPath], file: file, line: line)
+        XCTAssert(resp.changes.updatedIndexes.count == 0,file: file, line: line)
+        XCTAssert(resp.changes.removedIndexes.count == 0,file: file, line: line)
         
         XCTAssertEqual(myCollection.element(atIndexPath: indexPath), object,file: file, line: line)
         
@@ -124,9 +124,9 @@ final class DiffCollectionTester {
         }
         
         let resp = myCollection.update(with: object)
-        XCTAssert(resp.addedIndexes.count == 0, file: file, line: line)
-        XCTAssertEqual(resp.updatedIndexes, [indexPath], file: file, line: line)
-        XCTAssert(resp.removedIndexes.count == 0, file: file, line: line)
+        XCTAssert(resp.changes.addedIndexes.count == 0, file: file, line: line)
+        XCTAssertEqual(resp.changes.updatedIndexes, [indexPath], file: file, line: line)
+        XCTAssert(resp.changes.removedIndexes.count == 0, file: file, line: line)
         
         XCTAssertEqual(myCollection[indexPath], object, file: file, line: line)
         

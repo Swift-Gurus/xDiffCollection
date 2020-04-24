@@ -32,9 +32,9 @@ public struct CollectionChanges<T, C: Collection> where C.Element == T {
 
 public extension CollectionChanges where C: RangeReplaceableCollection, C.Element == T {
 
-    public init(updatedIndexes: C = C(),
-                removedIndexes: C = C(),
-                addedIndexes: C = C()) {
+     init(updatedIndexes: C = C(),
+          removedIndexes: C = C(),
+          addedIndexes: C = C()) {
         self.updatedIndexes = updatedIndexes
         self.addedIndexes = addedIndexes
         self.removedIndexes = removedIndexes

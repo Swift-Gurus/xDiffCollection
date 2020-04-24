@@ -82,7 +82,11 @@ public struct Diff<T, C>: Collection where T: Equatable & Hashable, C: RangeRepl
     }
 }
 
+
+
+
 public extension DiffCollection where C == [CollectionBin<T,[T]>] {
+    
     init(filters: [DiffCollectionFilter<T>]) {
         
         let collection: [CollectionBin<T,[T]>] = filters.map({ CollectionBin(collection: [], filter: $0.filter, sort: $0.sort) })
@@ -90,10 +94,11 @@ public extension DiffCollection where C == [CollectionBin<T,[T]>] {
         _backstorage = collection
     }
     
+    @available(*, deprecated)
     func updating(with element: T) -> (collection: Diff, changes: DiffCollectionResult) {
 
         let result = self.map({ $0.updating(element) })
-        
+    
        let changes =  result.map({ $0.changes })
                             .enumerated()
                             .map({ convertChanges($0.element, for: $0.offset) })
@@ -132,13 +137,23 @@ public extension DiffCollection where C == [CollectionBin<T,[T]>] {
 
 extension Diff: MutableCollection {}
 
-extension Diff where C == [CollectionBin<T,[T]>] {
+public extension Diff where C == [CollectionBin<T,[T]>] {
 
     @discardableResult
-    public mutating func update(with element: T) -> DiffCollectionResult {
-        let updateResult =  self.updating(with: element)
-        self = updateResult.collection
-        return updateResult.changes
+    mutating func update(with element: T) -> DiffCollectionSnapshot<T> {
+        let result: DiffCollectionSnapshot<T> = updating(with: element)
+        self = result.collection
+        return result
     }
-    
+}
+
+
+// MARK: - NEW API
+public extension DiffCollection where C == [CollectionBin<T,[T]>]  {
+    func updating(with element: T) -> DiffCollectionSnapshot<T> {
+        let result: (collection: Diff, changes: DiffCollectionResult) = updating(with: element)
+        return DiffCollectionSnapshot(element: element,
+                                      collection: result.collection,
+                                      changes: result.changes)
+    }
 }

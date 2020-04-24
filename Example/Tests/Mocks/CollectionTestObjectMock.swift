@@ -21,10 +21,11 @@ struct CollectionTestObjectMock: Hashable, Equatable {
     var status: ObjectStatus
     var rank : Int
     
-    var hashValue : Int {
-        return value.hashValue + rank
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(value)
+        hasher.combine(rank)
     }
-    
+
     static func == (lhs: CollectionTestObjectMock, rhs: CollectionTestObjectMock) -> Bool {
         return  lhs.hashValue == rhs.hashValue &&
                 lhs.status    == rhs.status &&

@@ -141,7 +141,7 @@ public extension Diff where C == [CollectionBin<T,[T]>] {
 
     @discardableResult
     mutating func update(with element: T) -> DiffCollectionSnapshot<T> {
-        let result: DiffCollectionSnapshot<T> = updating(with: element)
+        let result: DiffCollectionSnapshot<T> = updating(using: element)
         self = result.collection
         return result
     }
@@ -150,8 +150,8 @@ public extension Diff where C == [CollectionBin<T,[T]>] {
 
 // MARK: - NEW API
 public extension DiffCollection where C == [CollectionBin<T,[T]>]  {
-    func updating(with element: T) -> DiffCollectionSnapshot<T> {
-        let result: (collection: Diff, changes: DiffCollectionResult) = updating(with: element)
+    func updating(using element: T) -> DiffCollectionSnapshot<T> {
+        let result = updating(with: element)
         return DiffCollectionSnapshot(element: element,
                                       collection: result.collection,
                                       changes: result.changes)

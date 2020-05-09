@@ -57,8 +57,8 @@ public struct Diff<T, C>: Collection where T: Equatable & Hashable, C: RangeRepl
     }
     
     public subscript(position: IndexPath) -> T? {
-        return _backstorage.element(at: position.section)
-            .flatMap({ $0.element(at: position.row) })
+        return _backstorage.element(at: position[0])
+                           .flatMap({ $0.element(at: position[1]) })
     }
     
     
@@ -124,8 +124,8 @@ public extension DiffCollection where C == [CollectionBin<T,[T]>] {
         return indexes.map({ transformIntoIndexPath(index: $0, forSection: section) } )
     }
     
-    private func transformIntoIndexPath(index: C.Index, forSection section: Int) -> IndexPath {
-        return IndexPath(row: index, section: section)
+    private func transformIntoIndexPath(index: C.Index, forSection section: C.Index) -> IndexPath {
+        return IndexPath(indexes: [section, index])
     }
     
  

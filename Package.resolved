@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftyCollection",
+        "repositoryURL": "https://github.com/Swift-Gurus/SwiftyCollection.git",
+        "state": {
+          "branch": null,
+          "revision": "7490578152465ab7a11b4f3f62476b98e4ea4dcd",
+          "version": "2.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

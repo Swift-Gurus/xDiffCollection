@@ -61,19 +61,6 @@ class CollectionTestTests: XCTestCase {
                                              element:object4)
     }
 
-    func test_Deleting_From_Collection() {
-        test_Fillup_Collection()
-        
-        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:0),
-                                        element:object1)
-        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:1),
-                                        element:object3)
-        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:2),
-                                        element:object4)
-        tester.testElementIsDeletedFrom(indexPath:IndexPath(row:0, section:0),
-                                        element:object2)        
-    }
-
     func test_Update_Collection() {
         test_Fillup_Collection()
         

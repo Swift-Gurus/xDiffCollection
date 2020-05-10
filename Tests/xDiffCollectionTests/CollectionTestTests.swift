@@ -9,6 +9,21 @@
 import XCTest
 @testable import xDiffCollection
 
+#if os(macOS)
+extension IndexPath {
+    var section: IndexPath.Element {
+        self[0]
+    }
+    var row: IndexPath.Element {
+        self[1]
+    }
+    
+    init(row: Int, section: Int) {
+        self.init(indexes: [section,row])
+    }
+}
+#endif
+
 fileprivate let object1 = CollectionTestObjectMock(value:"apple")
 fileprivate let object2 = CollectionTestObjectMock(value:"ansi")
 fileprivate let object3 = CollectionTestObjectMock(value:"bacon")

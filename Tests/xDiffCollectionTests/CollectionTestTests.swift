@@ -51,13 +51,13 @@ class CollectionTestTests: XCTestCase {
     
     func test_Fillup_Collection() {
         
-        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:0),
+        tester.testElementIsAddedAt(indexPath: IndexPath(row:0, section:0),
                                              element:object1)
-        tester.testElementIsAddedAt(indexPath:IndexPath(row:1, section:0),
+        tester.testElementIsAddedAt(indexPath: IndexPath(row:1, section:0),
                                              element:object2)
-        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:1),
+        tester.testElementIsAddedAt(indexPath: IndexPath(row:0, section:1),
                                              element:object3)
-        tester.testElementIsAddedAt(indexPath:IndexPath(row:0, section:2),
+        tester.testElementIsAddedAt(indexPath: IndexPath(row:0, section:2),
                                              element:object4)
     }
 

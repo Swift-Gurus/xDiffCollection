@@ -18,6 +18,11 @@ platform :ios do
     run_tests
   end
 
+  desc "Create docs"
+  lane :makeDocs do 
+    jazzy
+  end
+
 #Ending platform :ios do
 end
 

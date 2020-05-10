@@ -1,8 +1,9 @@
 # Ordered by output of `jazzy — help config`
-output: xDiffCollection
+output: docs
 clean: true
 author: Me
 module: xDiffCollection
+scheme: xDiffCollection
 module_version: 1.0
 copyright: Copyright message here
 min_acl: public

@@ -21,7 +21,7 @@ to a bin where the updated element passes another's bin logic.
 - `mutating func delete(element:T) -> DiffCollectionResult`
 
 ### Element Accessing Methods
-- `func element(atIndexPath path:IndexPath) -> T?`
+- `func element(atIndexPath path: IndexPath) -> T?`
 - `func numberOfElements(inSection binIndex:Int) -> Int`
 - `func numberOfSections() -> Int`
 

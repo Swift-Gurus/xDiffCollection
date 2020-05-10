@@ -16,21 +16,16 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## iOS
-### ios initialize
-```
-fastlane ios initialize
-```
-Setup CIRCLE
 ### ios runTests
 ```
 fastlane ios runTests
 ```
 Runs all the tests
-### ios release_current
+### ios makeDocs
 ```
-fastlane ios release_current
+fastlane ios makeDocs
 ```
-
+Create docs
 
 ----
 

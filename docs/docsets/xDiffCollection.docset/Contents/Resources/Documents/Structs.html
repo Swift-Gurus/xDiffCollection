@@ -14,7 +14,7 @@
     <a title="Structures  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">xDiffCollection 1.0 Docs</a> (24% documented)</p>
+        <p><a href="index.html">xDiffCollection 1.0 Docs</a> (43% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -32,14 +32,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Extensions/DiffCollection.html">DiffCollection</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Protocols.html">Protocols</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Protocols/CollectionUpdateResult.html">CollectionUpdateResult</a>
               </li>
             </ul>
           </li>
@@ -111,7 +103,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Struct that contains updated storage and changes applied to it</p>
+<h3 id='example' class='heading'>Example:</h3>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">AnyModel</span> <span class="p">{</span>
+    <span class="c1">// any implementation</span>
+<span class="p">}</span>
+
+<span class="k">let</span> <span class="nv">result</span><span class="p">:</span> <span class="kt">BinUpdateResult</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">AnyModel</span><span class="p">]</span><span class="o">&gt;</span> <span class="o">=</span> <span class="c1">// returned by a function</span>
+<span class="c1">// result.bin is a type of [AnyModel]</span>
+<span class="c1">// result.changes is a type of CollectionChanges&lt;[Int]&gt;</span>
+
+</code></pre>
 
                         <a href="Structs/BinUpdateResult.html" class="slightly-smaller">See more</a>
                       </div>
@@ -119,7 +121,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">BinUpdateResult</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Backstorage</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">Backstorage</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Backstorage</span> <span class="p">:</span> <span class="kt">Collection</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">BinUpdateResult</span><span class="o">&lt;</span><span class="kt">Backstorage</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">Backstorage</span> <span class="p">:</span> <span class="kt">Collection</span></code></pre>
 
                         </div>
                       </div>
@@ -139,7 +141,47 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Represents a Facade for <code>RangeReplaceableCollection</code> that is a <code>Collection</code> itself</p>
+
+<p>Provides <code>updating</code> method to <code>find</code> the element  if it exists and <code>update</code> or <code>remove</code> it
+ based on the rules provided by <code><a href="Typealiases.html#/s:15xDiffCollection0B6Filtera">CollectionFilter&lt;Element&gt;</a></code></p>
+
+<p>If <code>Backstorage</code> doesn&rsquo;t contain the element and the element complies to the rules, <code>updating</code> method
+ will append the element</p>
+
+<p>Every call of <code>updating</code> method returns <code><a href="Structs/BinUpdateResult.html">BinUpdateResult&lt;CollectionBin&gt;</a></code> that contains info about
+ the update operation</p>
+
+<p><code>CollectionBin</code> can be initialized with filter and sorting closures specifing the rules how to treat the elements.</p>
+
+<p>### Example ###</p>
+<pre class="highlight swift"><code> <span class="c1">//let's have a model  like</span>
+ <span class="kd">struct</span> <span class="kt">CollectionTestObjectMock</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+      <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
+      <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">ObjectStatus</span>
+      <span class="k">var</span> <span class="nv">rank</span><span class="p">:</span> <span class="kt">Int</span>
+
+
+      <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span> <span class="p">{</span>
+          <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+          <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+      <span class="p">}</span>
+
+     <span class="c1">// -Note: since value and rank are a part of unique value of the object the only part that</span>
+     <span class="c1">// cab be changed is the status</span>
+      <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">CollectionTestObjectMock</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">CollectionTestObjectMock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+          <span class="n">lhs</span><span class="o">.</span><span class="n">status</span>  <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">status</span>
+      <span class="p">}</span>
+ <span class="p">}</span>
+
+</code></pre>
+
+<p>Then a basic initizlization will be:</p>
+<pre class="highlight swift"><code>     <span class="c1">//Will contain object with status == .cold and sorted by rank descending</span>
+     <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">CollectionTestObjectMock</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Status is new or old"</span><span class="p">,</span>
+                                                    <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="o">.</span><span class="n">cold</span><span class="p">},</span>
+                                                    <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">rank</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">rank</span> <span class="p">})</span>
+</code></pre>
 
                         <a href="Structs/CollectionBin.html" class="slightly-smaller">See more</a>
                       </div>
@@ -147,7 +189,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CollectionBin</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">Backstorage</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Collection</span> <span class="k">where</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">Backstorage</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">Backstorage</span> <span class="p">:</span> <span class="kt">RangeReplaceableCollection</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CollectionBin</span><span class="o">&lt;</span><span class="kt">Backstorage</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Collection</span> <span class="k">where</span> <span class="kt">Backstorage</span> <span class="p">:</span> <span class="kt">RangeReplaceableCollection</span></code></pre>
 
                         </div>
                       </div>
@@ -167,7 +209,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Struct that contains information about added/removed/updated indexes
+Indexes are represented by any colection:</p>
+<h3 id='usage-example' class='heading'>Usage example:</h3>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">changes</span> <span class="o">=</span> <span class="kt">CollectionChanges</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Int</span><span class="p">]</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">updatedIndexes</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+                                        <span class="nv">emovedIndexes</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                        <span class="nv">addedIndexes</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+</code></pre>
 
                         <a href="Structs/CollectionChanges.html" class="slightly-smaller">See more</a>
                       </div>
@@ -175,7 +224,42 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CollectionChanges</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">C</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">C</span> <span class="p">:</span> <span class="kt">Collection</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CollectionChanges</span><span class="o">&lt;</span><span class="kt">C</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">C</span> <span class="p">:</span> <span class="kt">Collection</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15xDiffCollection0A0V"></a>
+                    <a name="//apple_ref/swift/Struct/Diff" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15xDiffCollection0A0V">Diff</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Structs/Diff.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Diff</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">C</span><span class="o">&gt;</span><span class="p">:</span> <span class="kt">Collection</span> <span class="k">where</span>
+<span class="kt">T</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="o">&amp;</span> <span class="kt">Hashable</span><span class="p">,</span>
+<span class="kt">C</span><span class="p">:</span> <span class="kt">RangeReplaceableCollection</span><span class="p">,</span>
+<span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="p">:</span> <span class="kt">Collection</span><span class="p">,</span>
+<span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">T</span><span class="p">,</span>
+<span class="kt">C</span><span class="o">.</span><span class="kt">Index</span> <span class="o">==</span> <span class="kt">Int</span><span class="p">,</span>
+<span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="o">.</span><span class="kt">Index</span> <span class="o">==</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Index</span></code></pre>
+<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Diff</span><span class="p">:</span> <span class="kt">MutableCollection</span></code></pre>
 
                         </div>
                       </div>
@@ -213,35 +297,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15xDiffCollection0A0V"></a>
-                    <a name="//apple_ref/swift/Struct/Diff" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0A0V">Diff</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Structs/Diff.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Diff</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">C</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">Collection</span> <span class="k">where</span> <span class="kt">T</span> <span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">C</span> <span class="p">:</span> <span class="kt">RangeReplaceableCollection</span><span class="p">,</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span> <span class="p">:</span> <span class="kt">Collection</span><span class="p">,</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Index</span> <span class="o">==</span> <span class="kt">Int</span><span class="p">,</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="o">.</span><span class="kt">Index</span> <span class="o">==</span> <span class="kt">Int</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Diff</span><span class="p">:</span> <span class="kt">MutableCollection</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:15xDiffCollection0aB8SnapshotV"></a>
                     <a name="//apple_ref/swift/Struct/DiffCollectionSnapshot" class="dashAnchor"></a>
                     <a class="token" href="#/s:15xDiffCollection0aB8SnapshotV">DiffCollectionSnapshot</a>
@@ -252,7 +307,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Respresents snapshot of a collection after updating with an element</p>
+                        <p>Respresents a snapshot of a collection after updating with an element
+Contains info about the element, new collection and changes</p>
 
                         <a href="Structs/DiffCollectionSnapshot.html" class="slightly-smaller">See more</a>
                       </div>

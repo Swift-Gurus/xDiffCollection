@@ -7,20 +7,28 @@
 
 import Foundation
 
-public protocol CollectionUpdateResult {
-    associatedtype Index
-    var updatedIndexes: [Index] { get }
-    var removedIndexes: [Index] { get }
-    var addedIndexes: [Index] { get }
-}
-
-
-public struct CollectionChanges<T, C: Collection> where C.Element == T {
+/**
+    Struct that contains information about added/removed/updated indexes
+    Indexes are represented by any colection:
+ 
+    ### Usage example: ###
+    ````
+     let changes = CollectionChanges<[Int]>(updatedIndexes: [0,2,3],
+                                            emovedIndexes: [1],
+                                            addedIndexes: [4])
+ 
+    ````    
+*/
+public struct CollectionChanges<C: Collection> {
     public  let updatedIndexes: C
     public let removedIndexes: C
     public let addedIndexes: C
-    public typealias Index = T
-    
+
+    /// initialize changes
+    /// - Parameters:
+    ///   - updatedIndexes: Collection of Updated Indexes
+    ///   - removedIndexes: Collection of Removed Indexes
+    ///   - addedIndexes: Collection of Added Indexes
     public init(updatedIndexes: C,
                 removedIndexes: C,
                 addedIndexes: C) {
@@ -30,7 +38,7 @@ public struct CollectionChanges<T, C: Collection> where C.Element == T {
     }
 }
 
-public extension CollectionChanges where C: RangeReplaceableCollection, C.Element == T {
+extension CollectionChanges where C: RangeReplaceableCollection {
 
      init(updatedIndexes: C = C(),
           removedIndexes: C = C(),
@@ -40,4 +48,3 @@ public extension CollectionChanges where C: RangeReplaceableCollection, C.Elemen
         self.removedIndexes = removedIndexes
     }
 }
-

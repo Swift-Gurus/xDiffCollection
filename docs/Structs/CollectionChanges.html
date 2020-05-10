@@ -14,7 +14,7 @@
     <a title="CollectionChanges Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">xDiffCollection 1.0 Docs</a> (24% documented)</p>
+        <p><a href="../index.html">xDiffCollection 1.0 Docs</a> (43% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -32,14 +32,6 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Extensions/DiffCollection.html">DiffCollection</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="../Protocols.html">Protocols</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Protocols/CollectionUpdateResult.html">CollectionUpdateResult</a>
               </li>
             </ul>
           </li>
@@ -94,11 +86,18 @@
             <h1>CollectionChanges</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CollectionChanges</span><span class="o">&lt;</span><span class="kt">T</span><span class="p">,</span> <span class="kt">C</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">T</span> <span class="o">==</span> <span class="kt">C</span><span class="o">.</span><span class="kt">Element</span><span class="p">,</span> <span class="kt">C</span> <span class="p">:</span> <span class="kt">Collection</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">CollectionChanges</span><span class="o">&lt;</span><span class="kt">C</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">C</span> <span class="p">:</span> <span class="kt">Collection</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Struct that contains information about added/removed/updated indexes
+Indexes are represented by any colection:</p>
+<h3 id='usage-example' class='heading'>Usage example:</h3>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">changes</span> <span class="o">=</span> <span class="kt">CollectionChanges</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Int</span><span class="p">]</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">updatedIndexes</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+                                        <span class="nv">emovedIndexes</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                        <span class="nv">addedIndexes</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+</code></pre>
 
           </section>
           <section class="section task-group-section">
@@ -107,9 +106,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15xDiffCollection0B7ChangesV14updatedIndexesq_vp"></a>
+                    <a name="/s:15xDiffCollection0B7ChangesV14updatedIndexesxvp"></a>
                     <a name="//apple_ref/swift/Property/updatedIndexes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV14updatedIndexesq_vp">updatedIndexes</a>
+                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV14updatedIndexesxvp">updatedIndexes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -134,9 +133,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15xDiffCollection0B7ChangesV14removedIndexesq_vp"></a>
+                    <a name="/s:15xDiffCollection0B7ChangesV14removedIndexesxvp"></a>
                     <a name="//apple_ref/swift/Property/removedIndexes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV14removedIndexesq_vp">removedIndexes</a>
+                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV14removedIndexesxvp">removedIndexes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -161,9 +160,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15xDiffCollection0B7ChangesV12addedIndexesq_vp"></a>
+                    <a name="/s:15xDiffCollection0B7ChangesV12addedIndexesxvp"></a>
                     <a name="//apple_ref/swift/Property/addedIndexes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV12addedIndexesq_vp">addedIndexes</a>
+                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV12addedIndexesxvp">addedIndexes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -188,36 +187,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15xDiffCollection0B7ChangesV5Indexa"></a>
-                    <a name="//apple_ref/swift/Alias/Index" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV5Indexa">Index</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">Index</span> <span class="o">=</span> <span class="kt">T</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15xDiffCollection0B7ChangesV14updatedIndexes07removedE005addedE0ACyxq_Gq__q_q_tcfc"></a>
+                    <a name="/s:15xDiffCollection0B7ChangesV14updatedIndexes07removedE005addedE0ACyxGx_xxtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(updatedIndexes:removedIndexes:addedIndexes:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV14updatedIndexes07removedE005addedE0ACyxq_Gq__q_q_tcfc">init(updatedIndexes:<wbr>removedIndexes:<wbr>addedIndexes:<wbr>)</a>
+                    <a class="token" href="#/s:15xDiffCollection0B7ChangesV14updatedIndexes07removedE005addedE0ACyxGx_xxtcfc">init(updatedIndexes:<wbr>removedIndexes:<wbr>addedIndexes:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -225,7 +197,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>initialize changes</p>
 
                       </div>
                       <div class="declaration">
@@ -238,47 +210,48 @@
 
                         </div>
                       </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Available%20where%20%60C%60:%20%60RangeReplaceableCollection%60,%20%60C.Element%60%20==%20%60T%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `C`: `RangeReplaceableCollection`, `C.Element` == `T`" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60C%60:%20%60RangeReplaceableCollection%60,%20%60C.Element%60%20==%20%60T%60"></a>
-                  <h3 class="section-name"><p>Available where <code>C</code>: <code>RangeReplaceableCollection</code>, <code>C.Element</code> == <code>T</code></p>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15xDiffCollection0B7ChangesVAASmR_rlE14updatedIndexes07removedE005addedE0ACyxq_Gq__q_q_tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(updatedIndexes:removedIndexes:addedIndexes:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0B7ChangesVAASmR_rlE14updatedIndexes07removedE005addedE0ACyxq_Gq__q_q_tcfc">init(updatedIndexes:<wbr>removedIndexes:<wbr>addedIndexes:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">(</span><span class="nv">updatedIndexes</span><span class="p">:</span> <span class="kt">C</span> <span class="o">=</span> <span class="kt">C</span><span class="p">(),</span>
-     <span class="nv">removedIndexes</span><span class="p">:</span> <span class="kt">C</span> <span class="o">=</span> <span class="kt">C</span><span class="p">(),</span>
-     <span class="nv">addedIndexes</span><span class="p">:</span> <span class="kt">C</span> <span class="o">=</span> <span class="kt">C</span><span class="p">())</span></code></pre>
-
-                        </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>updatedIndexes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Collection of Updated Indexes</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>removedIndexes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Collection of Removed Indexes</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>addedIndexes</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Collection of Added Indexes</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>

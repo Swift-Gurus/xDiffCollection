@@ -1,0 +1,11 @@
+# Ordered by output of `jazzy — help config`
+output: xDiffCollection
+clean: true
+author: Me
+module: xDiffCollection
+module_version: 1.0
+copyright: Copyright message here
+min_acl: public
+# Options : [apple | fullwidth | jony | DIRPATH]
+# Which theme to use. Specify either ‘apple’ (default), one of the other built-in theme names, or the path to your mustache templates and other assets for a custom theme.Default: apple
+theme: apple

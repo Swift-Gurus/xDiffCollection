@@ -47,7 +47,7 @@ final class DiffCollectionTester {
                                                                        file: StaticString = #file,
                                                                        line: UInt = #line) {
 
-        var (currentMatrix, _) = self.returnCurrentState()
+        let (currentMatrix, _) = self.returnCurrentState()
         let numberOfBins = myCollection.count
 
         let resp = myCollection.update(with: object)

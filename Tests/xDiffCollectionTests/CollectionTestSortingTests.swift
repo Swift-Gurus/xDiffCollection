@@ -38,7 +38,7 @@ class CollectionTestSortingTests: XCTestCase {
         super.setUp()
 
         //Sort by value first descending and then by rank ascending
-        let f1Sort: DiffCollectionSort<CollectionTestObjectMock> = { $0.value > $1.value || ($0.value == $1.value && $0.rank < $1.rank) }
+        let f1Sort: CollectionSort<CollectionTestObjectMock> = { $0.value > $1.value || ($0.value == $1.value && $0.rank < $1.rank) }
         let f1 = getFilter(with: "Value starts with a or z", canStartWith: ["a", "z"]).replacedSort(f1Sort)
         //Sort by rank descending
         let f2 = getFilter(with: "Value starts with b", canStartWith: ["b"]).replacedSort({ $0.rank > $1.rank })

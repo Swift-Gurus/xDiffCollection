@@ -14,7 +14,7 @@
     <a title="Diff Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">xDiffCollection 1.0 Docs</a> (43% documented)</p>
+        <p><a href="../index.html">xDiffCollection 1.0 Docs</a> (86% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -27,14 +27,6 @@
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/DiffCollection.html">DiffCollection</a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-group-name">
             <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
@@ -73,9 +65,6 @@
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:15xDiffCollection0aB6Resulta">DiffCollectionResult</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Typealiases.html#/s:15xDiffCollection0aB4Sorta">DiffCollectionSort</a>
-              </li>
             </ul>
           </li>
         </ul>
@@ -97,7 +86,72 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p><code>Diff</code> is a concept of a container for multiple collections and provides methods to access elements of those collections
+  <em>Example</em>:</p>
+<pre class="highlight swift"><code>       <span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Adams"</span><span class="p">,</span> <span class="s">"Bryant"</span><span class="p">,</span> <span class="s">"Channing"</span><span class="p">]</span>
+       <span class="k">let</span> <span class="nv">cars</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Ford"</span><span class="p">,</span> <span class="s">"Dodge"</span><span class="p">]</span>
+       <span class="k">let</span> <span class="nv">collection</span> <span class="o">=</span> <span class="kt">Diff</span><span class="p">([</span><span class="n">names</span><span class="p">,</span><span class="n">cars</span><span class="p">])</span>
+       <span class="k">let</span> <span class="nv">subSequence</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+       <span class="nf">print</span><span class="p">(</span><span class="n">subSequence</span><span class="p">)</span>
+       <span class="c1">// ["Ford", "Dodge"]</span>
+
+       <span class="k">let</span> <span class="nv">element</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="kt">IndexPath</span><span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="nv">section</span><span class="p">:</span> <span class="mi">1</span><span class="p">)]</span>
+       <span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+       <span class="c1">// "Ford"</span>
+</code></pre>
+
+<p>Contains a very powerful <strong>extension</strong> for <code>Diff</code>where  <code>C</code> == [<code><a href="../Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code>] that
+ provides logic for updating element and putting it in propper subcollections of type <code><a href="../Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code></p>
+
+<p>An update operation returns <code><a href="../Structs/DiffCollectionSnapshot.html">DiffCollectionSnapshot&lt;T&gt;</a></code> containing modifications made to the collection and
+ its subcollections.</p>
+
+<p><strong>Usage Example</strong></p>
+
+<ul>
+<li><p>Define a model</p>
+<pre class="highlight swift"><code>  <span class="c1">//let's have a model like</span>
+  <span class="kd">struct</span> <span class="kt">TestObject</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+       <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
+       <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">ObjectStatus</span>
+       <span class="k">var</span> <span class="nv">rank</span><span class="p">:</span> <span class="kt">Int</span>
+
+       <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span> <span class="p">{</span>
+           <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+           <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+       <span class="p">}</span>
+
+      <span class="c1">// -Note: since value and rank are a part of unique value of the object the only part that</span>
+      <span class="c1">// cab be changed is the status</span>
+       <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+           <span class="n">lhs</span><span class="o">.</span><span class="n">status</span>  <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">status</span>
+       <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></li>
+<li><p>Define filters for sections:</p>
+<pre class="highlight swift"><code>    <span class="k">let</span> <span class="nv">startsARankSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with a"</span><span class="p">,</span>
+                                                             <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"a"</span><span class="p">)</span> <span class="p">},</span>
+                                                             <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">rank</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">rank</span> <span class="p">})</span>
+
+    <span class="k">let</span> <span class="nv">startedBValueSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with b"</span><span class="p">,</span>
+                                                               <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"b"</span><span class="p">)</span> <span class="p">},</span>
+                                                               <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">value</span> <span class="p">})</span>
+</code></pre></li>
+<li><p>initialize <code>Diff</code></p>
+<pre class="highlight swift"><code>   <span class="k">var</span> <span class="nv">diffCollection</span> <span class="o">=</span> <span class="p">[</span><span class="n">startsARankSorted</span><span class="p">,</span> <span class="n">startedBValueSorted</span><span class="p">]</span>
+</code></pre></li>
+</ul>
+<pre class="highlight swift"><code>
+   <span class="o">-</span> <span class="kt">Start</span> <span class="n">using</span> <span class="n">by</span> <span class="n">calling</span> <span class="n">upade</span> <span class="n">function</span>
+</code></pre>
+<pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">elementA</span> <span class="o">=</span> <span class="kt">TestObject</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"Arm"</span><span class="p">,</span>
+                             <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
+                             <span class="nv">rank</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">snapshot</span> <span class="o">=</span> <span class="n">diffCollection</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">elementA</span><span class="p">)</span>
+   <span class="nf">debugPrint</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">changes</span><span class="p">)</span>
+   <span class="c1">// updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]</span>
+</code></pre>
+<pre class="highlight swift"><code></code></pre>
 
           </section>
           <section class="section task-group-section">
@@ -106,9 +160,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sl10startIndex0B0Qzvp"></a>
+                    <a name="/s:15xDiffCollection0A0V10startIndexSivp"></a>
                     <a name="//apple_ref/swift/Property/startIndex" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sl10startIndex0B0Qzvp">startIndex</a>
+                    <a class="token" href="#/s:15xDiffCollection0A0V10startIndexSivp">startIndex</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -116,7 +170,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Start index of the <code>C</code></p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -132,9 +187,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sl8endIndex0B0Qzvp"></a>
+                    <a name="/s:15xDiffCollection0A0V8endIndexSivp"></a>
                     <a name="//apple_ref/swift/Property/endIndex" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sl8endIndex0B0Qzvp">endIndex</a>
+                    <a class="token" href="#/s:15xDiffCollection0A0V8endIndexSivp">endIndex</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -142,7 +197,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>End  index of the <code>C</code></p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -238,9 +294,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sly7ElementQz5IndexQzcip"></a>
+                    <a name="/s:15xDiffCollection0A0Vy7ElementQy_Sicip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sly7ElementQz5IndexQzcip">subscript(_:<wbr>)</a>
+                    <a class="token" href="#/s:15xDiffCollection0A0Vy7ElementQy_Sicip">subscript(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -248,7 +304,21 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Geter and setter of  the element specified
+by an <code><a href="../Structs/Diff.html#/s:15xDiffCollection0A0V9IndexTypea">IndexType</a></code>.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Adams"</span><span class="p">,</span> <span class="s">"Bryant"</span><span class="p">,</span> <span class="s">"Channing"</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">cars</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Ford"</span><span class="p">,</span> <span class="s">"Dodge"</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">collection</span> <span class="o">=</span> <span class="kt">Diff</span><span class="p">([</span><span class="n">names</span><span class="p">,</span><span class="n">cars</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">element</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+<span class="c1">// ["Ford", "Dodge"]</span>
+</code></pre>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    <p>O(n)</p>
+
+</div>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -258,15 +328,35 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>Index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A index of the element(<code>C</code>). The index
+must be valid.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sl5index5after5IndexQzAD_tF"></a>
+                    <a name="/s:15xDiffCollection0A0V5index5afterS2i_tF"></a>
                     <a name="//apple_ref/swift/Method/index(after:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sl5index5after5IndexQzAD_tF">index(after:<wbr>)</a>
+                    <a class="token" href="#/s:15xDiffCollection0A0V5index5afterS2i_tF">index(after:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -274,7 +364,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Returns the position immediately after the given index.</p>
+
+<p>The successor of an index must be well defined. For an index <code>i</code> into a
+collection <code>c</code>, calling <code>c.index(after: i)</code> returns the same index every
+time.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -283,6 +378,30 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">index</span><span class="p">(</span><span class="n">after</span> <span class="nv">i</span><span class="p">:</span> <span class="kt"><a href="../Structs/Diff.html#/s:15xDiffCollection0A0V9IndexTypea">IndexType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/Diff.html#/s:15xDiffCollection0A0V9IndexTypea">IndexType</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>i</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A valid index of the collection. <code>i</code> must be less than
+<code><a href="../Structs/Diff.html#/s:15xDiffCollection0A0V8endIndexSivp">endIndex</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The index value immediately after <code>i</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -300,7 +419,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Accesses  the element specified
+by an <code>IndexPath</code>.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Adams"</span><span class="p">,</span> <span class="s">"Bryant"</span><span class="p">,</span> <span class="s">"Channing"</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">cars</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Ford"</span><span class="p">,</span> <span class="s">"Dodge"</span><span class="p">]</span>
+<span class="k">let</span> <span class="nv">collection</span> <span class="o">=</span> <span class="kt">Diff</span><span class="p">([</span><span class="n">names</span><span class="p">,</span><span class="n">cars</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">element</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="kt">IndexPath</span><span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="nv">section</span><span class="p">:</span> <span class="mi">1</span><span class="p">)]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+<span class="c1">// "Ford"</span>
+</code></pre>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    <p>O(n)</p>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -310,6 +442,26 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">position</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>Index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A index of the element(<code>C</code>). The index
+must be valid.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -327,7 +479,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Retuns number of elements in collection at <code><a href="../Structs/Diff.html#/s:15xDiffCollection0A0V9IndexTypea">IndexType</a></code></p>
 
                       </div>
                       <div class="declaration">
@@ -337,6 +489,29 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">numberOfElements</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt"><a href="../Structs/Diff.html#/s:15xDiffCollection0A0V9IndexTypea">IndexType</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>IndexType</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Int</p>
                       </div>
                     </section>
                   </div>
@@ -357,9 +532,56 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE6update4withAA0aB8SnapshotVyxGx_tF"></a>
-                    <a name="//apple_ref/swift/Method/update(with:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE6update4withAA0aB8SnapshotVyxGx_tF">update(with:<wbr>)</a>
+                    <a name="/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE7filtersACyxAHGSayAA0aB6FilterVyxGG_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(filters:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE7filtersACyxAHGSayAA0aB6FilterVyxGG_tcfc">init(filters:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Constructor that uses a collection of <code><a href="../Structs/DiffCollectionFilter.html">DiffCollectionFilter&lt;T&gt;</a></code>
+to specify rules per every section</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">(</span><span class="nv">filters</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/DiffCollectionFilter.html">DiffCollectionFilter</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filters</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>[<code><a href="../Structs/DiffCollectionFilter.html">DiffCollectionFilter&lt;T&gt;</a></code>]</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE8updating4withACyxAHG10collection_AA0B7ChangesVySay10Foundation9IndexPathVGG7changestx_tF"></a>
+                    <a name="//apple_ref/swift/Method/updating(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE8updating4withACyxAHG10collection_AA0B7ChangesVySay10Foundation9IndexPathVGG7changestx_tF">updating(with:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -374,10 +596,63 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updating</span><span class="p">(</span><span class="n">with</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nv">collection</span><span class="p">:</span> <span class="kt">Diff</span><span class="p">,</span> <span class="nv">changes</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:15xDiffCollection0aB6Resulta">DiffCollectionResult</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE6update4withAA0aB8SnapshotVyxGx_tF"></a>
+                    <a name="//apple_ref/swift/Method/update(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15xDiffCollection0A0VAASayAA0B3BinVySayxGGGRs_rlE6update4withAA0aB8SnapshotVyxGx_tF">update(with:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <pre class="highlight swift"><code><span class="kt">The</span> <span class="n">main</span> <span class="n">core</span> <span class="n">function</span> <span class="n">of</span> <span class="n">the</span> <span class="p">`</span><span class="nv">Diff</span><span class="p">`</span><span class="o">.</span>
+<span class="kt">Based</span> <span class="n">on</span> <span class="n">the</span> <span class="n">settings</span> <span class="err">`</span><span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="err">`</span> <span class="k">for</span> <span class="n">subcollections</span> <span class="err">`</span><span class="kt">CollectionBin</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">T</span><span class="p">]</span><span class="o">&gt;</span><span class="err">`</span>
+<span class="n">will</span> <span class="n">add</span><span class="p">,</span> <span class="n">remove</span> <span class="n">or</span> <span class="n">update</span> <span class="n">element</span> <span class="k">in</span> <span class="n">those</span> <span class="n">subcollections</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
 <span class="k">mutating</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">(</span><span class="n">with</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/DiffCollectionSnapshot.html">DiffCollectionSnapshot</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>element</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Element of Type <code>T</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>DiffCollectionSnapshot<T></p>
                       </div>
                     </section>
                   </div>
@@ -395,7 +670,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The main core function of the <code>Diff</code>.
+Based on the settings <code><a href="../Structs/DiffCollectionFilter.html">DiffCollectionFilter&lt;T&gt;</a></code> for subcollections <code><a href="../Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code>
+will add, remove or update element in those subcollections</p>
 
                       </div>
                       <div class="declaration">
@@ -405,6 +682,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updating</span><span class="p">(</span><span class="n">using</span> <span class="nv">element</span><span class="p">:</span> <span class="kt">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/DiffCollectionSnapshot.html">DiffCollectionSnapshot</a></span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>element</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Element of Type <code>T</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>DiffCollectionSnapshot<T></p>
                       </div>
                     </section>
                   </div>

@@ -21,7 +21,6 @@ class CollectionTestMultipleStatusTests: XCTestCase {
         super.setUp()
         let f1 = getFilter(with: "Status is new or old", allowedStatuses: [.new, .old])
         let f2 = getFilter(with: "Status is hot or cold", allowedStatuses: [.hot, .cold])
-
        
         tester = DiffCollectionTester(collection: DiffCollection(filters: [f1, f2]))
     }

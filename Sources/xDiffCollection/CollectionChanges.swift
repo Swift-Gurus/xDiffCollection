@@ -20,8 +20,14 @@ import Foundation
     ````    
 */
 public struct CollectionChanges<C: Collection> {
+    
+    /// Contains updated indexes
     public  let updatedIndexes: C
+    
+    /// Contains removed  indexes
     public let removedIndexes: C
+    
+    /// Contains added indexes
     public let addedIndexes: C
 
     /// initialize changes

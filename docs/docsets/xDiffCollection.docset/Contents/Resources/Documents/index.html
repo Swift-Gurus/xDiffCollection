@@ -13,7 +13,7 @@
     <a title="xDiffCollection  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">xDiffCollection 1.0 Docs</a> (43% documented)</p>
+        <p><a href="index.html">xDiffCollection 1.0 Docs</a> (86% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -26,14 +26,6 @@
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/DiffCollection.html">DiffCollection</a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-group-name">
             <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
@@ -72,9 +64,6 @@
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:15xDiffCollection0aB6Resulta">DiffCollectionResult</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Typealiases.html#/s:15xDiffCollection0aB4Sorta">DiffCollectionSort</a>
-              </li>
             </ul>
           </li>
         </ul>
@@ -90,88 +79,81 @@
 <a href="https://cocoapods.org/pods/xDiffCollection"><img src="https://img.shields.io/cocoapods/p/SwiftyCollection.svg?style=flat" alt="Platform"></a></p>
 <h2 id='description' class='heading'>Description</h2>
 
-<p>xDiffCollection operates on the concept of bins. A bin is an array and a filter. 
-Elements that go in those bins are hashable identifiable and equatable differentiable.
-The filter accepts elements into a bin based on a custom logic provided via a boolean closure.</p>
+<p><code><a href="Structs/Diff.html">Diff</a></code> is a concept of a container for multiple collections and provides methods to access elements of those collections
+  <em>Example</em>:</p>
+<pre class="highlight plaintext"><code>       let names = ["Adams", "Bryant", "Channing"]
+       let cars = ["Ford", "Dodge"]
+       let collection = Diff([names,cars])
+       let subSequence = collection[1]
+       print(subSequence)
+       // ["Ford", "Dodge"]
 
-<p>xDiffCollection exposes two operations: update and delete (update can also add an element if the element passes the test and 
-the element is not previously there)</p>
+       let element = collection[IndexPath(row: 0,section: 1)]
+       print(element)
+       // "Ford"
+</code></pre>
 
-<p>If the element was already there and an update operation is performed, the logic in the bin is re-run to decide if this is 
-still the appropriate bin for that updated element or not. If it is not, the element is deleted from the current bin and moved
-to a bin where the updated element passes another&rsquo;s bin logic.</p>
-<h3 id='main-mutating-methods' class='heading'>Main Mutating Methods</h3>
+<p>Contains a very powerful <strong>extension</strong> for <code><a href="Structs/Diff.html">Diff</a></code>where  <code>C</code> == [<code><a href="Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code>] that
+ provides logic for updating element and putting it in propper subcollections of type <code><a href="Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code></p>
+
+<p>An update operation returns <code><a href="Structs/DiffCollectionSnapshot.html">DiffCollectionSnapshot&lt;T&gt;</a></code> containing modifications made to the collection and
+ its subcollections.</p>
+
+<p><strong>Usage Example</strong></p>
 
 <ul>
-<li><code>mutating func update(element:T) -&gt; DiffCollectionResult</code></li>
-<li><code>mutating func delete(element:T) -&gt; DiffCollectionResult</code></li>
+<li><p>Define a model</p>
+<pre class="highlight plaintext"><code>  //let's have a model like
+  struct TestObject: Hashable, Equatable {
+       var value: String
+       var status: ObjectStatus
+       var rank: Int
+
+       func hash(into hasher: inout Hasher) {
+           hasher.combine(value)
+           hasher.combine(rank)
+       }
+
+      // -Note: since value and rank are a part of unique value of the object the only part that
+      // cab be changed is the status
+       static func == (lhs: Self, rhs: Self) -&gt; Bool {
+           lhs.status  == rhs.status
+       }
+  }
+</code></pre></li>
+<li><p>Define filters for sections:</p>
+<pre class="highlight plaintext"><code>    let startsARankSorted = DiffCollectionFilter&lt;TestObject&gt;(name: "Starts with a",
+                                                             filter: { $0.value.starts(with: "a") },
+                                                             sort: { $0.rank &gt; $1.rank })
+
+    let startedBValueSorted = DiffCollectionFilter&lt;TestObject&gt;(name: "Starts with b",
+                                                               filter: { $0.value.starts(with: "b") },
+                                                               sort: { $0.value &gt; $1.value })
+</code></pre></li>
+<li><p>initialize <code><a href="Structs/Diff.html">Diff</a></code></p>
+<pre class="highlight plaintext"><code>   var diffCollection = [startsARankSorted, startedBValueSorted]
+</code></pre></li>
 </ul>
-<h3 id='element-accessing-methods' class='heading'>Element Accessing Methods</h3>
-
-<ul>
-<li><code>func element(atIndexPath path: IndexPath) -&gt; T?</code></li>
-<li><code>func numberOfElements(inSection binIndex:Int) -&gt; Int</code></li>
-<li><code>func numberOfSections() -&gt; Int</code></li>
-</ul>
-<h2 id='example' class='heading'>Example</h2>
-
-<p>After installing xDiffCollection, just include it via:</p>
-<pre class="highlight ruby"><code><span class="n">import</span> <span class="n">xDiffCollection</span>
+<pre class="highlight plaintext"><code>
+   - Start using by calling upade function
 </code></pre>
-
-<p>Create some DiffCollectionFilters:</p>
-<pre class="highlight ruby"><code><span class="n">let</span> <span class="n">f1</span> <span class="o">=</span> <span class="no">DiffCollectionFilter</span><span class="o">&lt;</span><span class="no">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Starts with a"</span><span class="p">,</span> <span class="n">filter</span><span class="p">:{</span> <span class="n">s</span> <span class="k">in</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">starts</span><span class="p">(</span><span class="ss">with: </span><span class="s2">"a"</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kp">true</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="kp">false</span>
-<span class="p">})</span>
-
-<span class="n">let</span> <span class="n">f2</span> <span class="o">=</span> <span class="no">DiffCollectionFilter</span><span class="o">&lt;</span><span class="no">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Starts with b"</span><span class="p">,</span> <span class="n">filter</span><span class="p">:{</span> <span class="n">s</span> <span class="k">in</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">starts</span><span class="p">(</span><span class="ss">with: </span><span class="s2">"b"</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kp">true</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="kp">false</span>
-<span class="p">})</span>
-
-<span class="n">let</span> <span class="n">f3</span> <span class="o">=</span> <span class="no">DiffCollectionFilter</span><span class="o">&lt;</span><span class="no">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="ss">name: </span><span class="s2">"Starts with c"</span><span class="p">,</span> <span class="n">filter</span><span class="p">:{</span> <span class="n">s</span> <span class="k">in</span>
-    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">.</span><span class="nf">value</span><span class="p">.</span><span class="nf">starts</span><span class="p">(</span><span class="ss">with: </span><span class="s2">"c"</span><span class="p">))</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="kp">true</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="kp">false</span>
-<span class="p">})</span>
+<pre class="highlight plaintext"><code>   let elementA = TestObject(value: "Arm",
+                             status: .new,
+                             rank: 100)
+   let snapshot = diffCollection.update(with: elementA)
+   debugPrint(snapshot.changes)
+   // updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]
 </code></pre>
+<pre class="highlight plaintext"><code>
 
-<p>Instanciate your collection using those filters:</p>
-<pre class="highlight ruby"><code><span class="n">let</span> <span class="n">myCollection</span> <span class="o">=</span> <span class="no">DiffCollection</span><span class="p">(</span><span class="ss">filters: </span><span class="p">[</span><span class="n">f1</span><span class="p">,</span><span class="n">f2</span><span class="p">,</span><span class="n">f3</span><span class="p">])</span>
+## Author
+
+Swift-Gurus Inc., alexei.hmelevski@gmail.com
+
+## License
+
+xDiffCollection is available under the MIT license. See the LICENSE file for more info.
 </code></pre>
-
-<p>And start using your collection:</p>
-<pre class="highlight ruby"><code><span class="n">let</span> <span class="n">result</span> <span class="p">:</span> <span class="no">DiffCollectionResult</span> <span class="o">=</span> <span class="n">myCollection</span><span class="p">.</span><span class="nf">update</span><span class="p">(</span><span class="ss">element: </span><span class="no">TestObject</span><span class="p">())</span>
-</code></pre>
-
-<p>Where</p>
-<pre class="highlight ruby"><code><span class="kp">public</span> <span class="n">struct</span> <span class="no">DiffCollectionResult</span> <span class="p">{</span>
-    <span class="kp">public</span> <span class="n">var</span> <span class="ss">deleted: </span><span class="p">[</span><span class="no">IndexPath</span><span class="p">]</span>
-    <span class="kp">public</span> <span class="n">var</span> <span class="ss">added: </span><span class="p">[</span><span class="no">IndexPath</span><span class="p">]</span>
-    <span class="kp">public</span> <span class="n">var</span> <span class="ss">updated: </span><span class="p">[</span><span class="no">IndexPath</span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre>
-
-<p>And IndexPath.section represents the storage bin in myCollection,
-and IndexPath.row the position of an element within its bin. </p>
-<h2 id='installation' class='heading'>Installation</h2>
-
-<p>xDiffCollection is available through <a href="https://cocoapods.org">CocoaPods</a>. To install
-it, simply add the following line to your Podfile:</p>
-<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'xDiffCollection'</span>
-</code></pre>
-<h2 id='author' class='heading'>Author</h2>
-
-<p>ALDO Inc., <a href="mailto:aldodev@aldogroup.com">aldodev@aldogroup.com</a></p>
-<h2 id='license' class='heading'>License</h2>
-
-<p>xDiffCollection is available under the MIT license. See the LICENSE file for more info.</p>
 
           </section>
         </section>

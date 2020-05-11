@@ -14,7 +14,7 @@
     <a title="Structures  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">xDiffCollection 1.0 Docs</a> (43% documented)</p>
+        <p><a href="index.html">xDiffCollection 1.0 Docs</a> (86% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -27,14 +27,6 @@
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Extensions/DiffCollection.html">DiffCollection</a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-group-name">
             <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
@@ -72,9 +64,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Typealiases.html#/s:15xDiffCollection0aB6Resulta">DiffCollectionResult</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Typealiases.html#/s:15xDiffCollection0aB4Sorta">DiffCollectionSort</a>
               </li>
             </ul>
           </li>
@@ -152,9 +141,9 @@
 <p>Every call of <code>updating</code> method returns <code><a href="Structs/BinUpdateResult.html">BinUpdateResult&lt;CollectionBin&gt;</a></code> that contains info about
  the update operation</p>
 
-<p><code>CollectionBin</code> can be initialized with filter and sorting closures specifing the rules how to treat the elements.</p>
+<p><code>CollectionBin</code> can be initialized with filter and sorting closures specifying the rules how to treat the elements.</p>
 
-<p>### Example ###</p>
+<p><strong>Example</strong></p>
 <pre class="highlight swift"><code> <span class="c1">//let's have a model  like</span>
  <span class="kd">struct</span> <span class="kt">CollectionTestObjectMock</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
       <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
@@ -244,7 +233,72 @@ Indexes are represented by any colection:</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p><code>Diff</code> is a concept of a container for multiple collections and provides methods to access elements of those collections
+  <em>Example</em>:</p>
+<pre class="highlight swift"><code>       <span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Adams"</span><span class="p">,</span> <span class="s">"Bryant"</span><span class="p">,</span> <span class="s">"Channing"</span><span class="p">]</span>
+       <span class="k">let</span> <span class="nv">cars</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Ford"</span><span class="p">,</span> <span class="s">"Dodge"</span><span class="p">]</span>
+       <span class="k">let</span> <span class="nv">collection</span> <span class="o">=</span> <span class="kt">Diff</span><span class="p">([</span><span class="n">names</span><span class="p">,</span><span class="n">cars</span><span class="p">])</span>
+       <span class="k">let</span> <span class="nv">subSequence</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+       <span class="nf">print</span><span class="p">(</span><span class="n">subSequence</span><span class="p">)</span>
+       <span class="c1">// ["Ford", "Dodge"]</span>
+
+       <span class="k">let</span> <span class="nv">element</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="kt">IndexPath</span><span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="nv">section</span><span class="p">:</span> <span class="mi">1</span><span class="p">)]</span>
+       <span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+       <span class="c1">// "Ford"</span>
+</code></pre>
+
+<p>Contains a very powerful <strong>extension</strong> for <code>Diff</code>where  <code>C</code> == [<code><a href="Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code>] that
+ provides logic for updating element and putting it in propper subcollections of type <code><a href="Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code></p>
+
+<p>An update operation returns <code><a href="Structs/DiffCollectionSnapshot.html">DiffCollectionSnapshot&lt;T&gt;</a></code> containing modifications made to the collection and
+ its subcollections.</p>
+
+<p><strong>Usage Example</strong></p>
+
+<ul>
+<li><p>Define a model</p>
+<pre class="highlight swift"><code>  <span class="c1">//let's have a model like</span>
+  <span class="kd">struct</span> <span class="kt">TestObject</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+       <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
+       <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">ObjectStatus</span>
+       <span class="k">var</span> <span class="nv">rank</span><span class="p">:</span> <span class="kt">Int</span>
+
+       <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span> <span class="p">{</span>
+           <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+           <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+       <span class="p">}</span>
+
+      <span class="c1">// -Note: since value and rank are a part of unique value of the object the only part that</span>
+      <span class="c1">// cab be changed is the status</span>
+       <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+           <span class="n">lhs</span><span class="o">.</span><span class="n">status</span>  <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">status</span>
+       <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></li>
+<li><p>Define filters for sections:</p>
+<pre class="highlight swift"><code>    <span class="k">let</span> <span class="nv">startsARankSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with a"</span><span class="p">,</span>
+                                                             <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"a"</span><span class="p">)</span> <span class="p">},</span>
+                                                             <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">rank</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">rank</span> <span class="p">})</span>
+
+    <span class="k">let</span> <span class="nv">startedBValueSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with b"</span><span class="p">,</span>
+                                                               <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"b"</span><span class="p">)</span> <span class="p">},</span>
+                                                               <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">value</span> <span class="p">})</span>
+</code></pre></li>
+<li><p>initialize <code>Diff</code></p>
+<pre class="highlight swift"><code>   <span class="k">var</span> <span class="nv">diffCollection</span> <span class="o">=</span> <span class="p">[</span><span class="n">startsARankSorted</span><span class="p">,</span> <span class="n">startedBValueSorted</span><span class="p">]</span>
+</code></pre></li>
+</ul>
+<pre class="highlight swift"><code>
+   <span class="o">-</span> <span class="kt">Start</span> <span class="n">using</span> <span class="n">by</span> <span class="n">calling</span> <span class="n">upade</span> <span class="n">function</span>
+</code></pre>
+<pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">elementA</span> <span class="o">=</span> <span class="kt">TestObject</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"Arm"</span><span class="p">,</span>
+                             <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
+                             <span class="nv">rank</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+   <span class="k">let</span> <span class="nv">snapshot</span> <span class="o">=</span> <span class="n">diffCollection</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">elementA</span><span class="p">)</span>
+   <span class="nf">debugPrint</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">changes</span><span class="p">)</span>
+   <span class="c1">// updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]</span>
+</code></pre>
+<pre class="highlight swift"><code></code></pre>
 
                         <a href="Structs/Diff.html" class="slightly-smaller">See more</a>
                       </div>
@@ -279,7 +333,14 @@ Indexes are represented by any colection:</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Generic struct that contains configuration for a one Bin/Section</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Elements of the collection should conform to <code>Hashable</code>
+It is very important to chose hash fucntion or value correctly since
+<code><a href="Structs/CollectionBin.html">CollectionBin&lt;Backstorage&gt;</a></code> will use it to identify the elements
+
+</div>
 
                         <a href="Structs/DiffCollectionFilter.html" class="slightly-smaller">See more</a>
                       </div>

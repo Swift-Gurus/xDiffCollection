@@ -14,7 +14,7 @@
     <a title="CollectionBin Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">xDiffCollection 1.0 Docs</a> (43% documented)</p>
+        <p><a href="../index.html">xDiffCollection 1.0 Docs</a> (86% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -27,14 +27,6 @@
     <div class="content-wrapper">
       <nav class="sidebar">
         <ul class="nav-groups">
-          <li class="nav-group-name">
-            <a href="../Extensions.html">Extensions</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="../Extensions/DiffCollection.html">DiffCollection</a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-group-name">
             <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
@@ -73,9 +65,6 @@
               <li class="nav-group-task">
                 <a href="../Typealiases.html#/s:15xDiffCollection0aB6Resulta">DiffCollectionResult</a>
               </li>
-              <li class="nav-group-task">
-                <a href="../Typealiases.html#/s:15xDiffCollection0aB4Sorta">DiffCollectionSort</a>
-              </li>
             </ul>
           </li>
         </ul>
@@ -101,9 +90,9 @@
 <p>Every call of <code>updating</code> method returns <code><a href="../Structs/BinUpdateResult.html">BinUpdateResult&lt;CollectionBin&gt;</a></code> that contains info about
  the update operation</p>
 
-<p><code>CollectionBin</code> can be initialized with filter and sorting closures specifing the rules how to treat the elements.</p>
+<p><code>CollectionBin</code> can be initialized with filter and sorting closures specifying the rules how to treat the elements.</p>
 
-<p>### Example ###</p>
+<p><strong>Example</strong></p>
 <pre class="highlight swift"><code> <span class="c1">//let's have a model  like</span>
  <span class="kd">struct</span> <span class="kt">CollectionTestObjectMock</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
       <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
@@ -191,9 +180,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sl10startIndex0B0Qzvp"></a>
+                    <a name="/s:15xDiffCollection0B3BinV10startIndex0E0Qzvp"></a>
                     <a name="//apple_ref/swift/Property/startIndex" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sl10startIndex0B0Qzvp">startIndex</a>
+                    <a class="token" href="#/s:15xDiffCollection0B3BinV10startIndex0E0Qzvp">startIndex</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -201,7 +190,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Start index of the <code>Backstorage</code></p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -217,9 +207,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sl8endIndex0B0Qzvp"></a>
+                    <a name="/s:15xDiffCollection0B3BinV8endIndex0E0Qzvp"></a>
                     <a name="//apple_ref/swift/Property/endIndex" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sl8endIndex0B0Qzvp">endIndex</a>
+                    <a class="token" href="#/s:15xDiffCollection0B3BinV8endIndex0E0Qzvp">endIndex</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -227,7 +217,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>End  index of the <code>Backstorage</code></p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -253,7 +244,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Main constructor for the struct</p>
 
                       </div>
                       <div class="declaration">
@@ -266,15 +257,58 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>collection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Any <code>RangeReplaceableCollection</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Provides rules to insert/delete/update elements</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sort</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Provides sorting rules for injecting elements.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sl5index5after5IndexQzAD_tF"></a>
+                    <a name="/s:15xDiffCollection0B3BinV5index5after5IndexQzAG_tF"></a>
                     <a name="//apple_ref/swift/Method/index(after:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sl5index5after5IndexQzAD_tF">index(after:<wbr>)</a>
+                    <a class="token" href="#/s:15xDiffCollection0B3BinV5index5after5IndexQzAG_tF">index(after:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -282,7 +316,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Returns the position immediately after the given index.</p>
+
+<p>The successor of an index must be well defined. For an index <code>i</code> into a
+collection <code>c</code>, calling <code>c.index(after: i)</code> returns the same index every
+time.</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -292,15 +331,39 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>i</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A valid index of the collection. <code>i</code> must be less than
+<code><a href="../Structs/CollectionBin.html#/s:15xDiffCollection0B3BinV8endIndex0E0Qzvp">endIndex</a></code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The index value immediately after <code>i</code>.</p>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:Sly7ElementQz5IndexQzcip"></a>
+                    <a name="/s:15xDiffCollection0B3BinVy7ElementQz5IndexQzcip"></a>
                     <a name="//apple_ref/swift/Method/subscript(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:Sly7ElementQz5IndexQzcip">subscript(_:<wbr>)</a>
+                    <a class="token" href="#/s:15xDiffCollection0B3BinVy7ElementQz5IndexQzcip">subscript(_:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -308,7 +371,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Accesses the element specified
+by an Index.</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="kt">CollectionBin</span><span class="p">([</span><span class="s">"Adams"</span><span class="p">,</span> <span class="s">"Bryant"</span><span class="p">,</span> <span class="s">"Channing"</span><span class="p">,</span> <span class="s">"Douglas"</span><span class="p">,</span> <span class="s">"Evarts"</span><span class="p">])</span>
+<span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="n">streets</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">streetsSlice</span><span class="p">)</span>
+<span class="c1">// "Channing"</span>
+</code></pre>
+<div class="aside aside-complexity">
+    <p class="aside-title">Complexity</p>
+    <p>O(1)</p>
+
+</div>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -317,6 +392,26 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">subscript</span><span class="p">(</span><span class="nv">position</span><span class="p">:</span> <span class="kt"><a href="../Structs/CollectionBin.html#/s:Sl5IndexQa">Index</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/CollectionBin.html#/s:ST7ElementQa">Element</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>Index</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A index of the element. The index
+must be valid.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -334,7 +429,33 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The core function of this struct.</p>
+
+<p><strong>Usage Example:</strong></p>
+<pre class="highlight swift"><code> <span class="c1">//let's have a model  like</span>
+ <span class="kd">struct</span> <span class="kt">CollectionTestObjectMock</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+      <span class="k">let</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
+      <span class="k">let</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">ObjectStatus</span>
+      <span class="k">let</span> <span class="nv">rank</span><span class="p">:</span> <span class="kt">Int</span>
+ <span class="p">}</span>
+
+</code></pre>
+
+<p>Then the call of the function might look like:</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">newElement</span> <span class="o">=</span> <span class="kt">CollectionTestObjectMock</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"TEST"</span><span class="p">,</span>
+                                           <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
+                                           <span class="nv">rank</span><span class="p">:</span> <span class="mi">150</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="nf">updating</span><span class="p">(</span><span class="n">newElement</span><span class="p">,</span>
+                              <span class="nv">whereUnique</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="s">"TEST"</span> <span class="p">},</span>
+                              <span class="nv">whereCompare</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="o">.</span><span class="k">new</span> <span class="p">})</span>
+</code></pre>
+
+<p>NOTE:  The method will try to look for an element with &ldquo;TEST&rdquo; value.</p>
+
+<ul>
+<li>if the element exist then based on compare closure it will update an element or will do noting</li>
+<li>if the element exist but doest pass filter function of the Bin, the element will be removed</li>
+</ul>
 
                       </div>
                       <div class="declaration">
@@ -346,6 +467,53 @@
                      <span class="n">whereCompare</span> <span class="nv">compare</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:15xDiffCollection0B6Filtera">CollectionFilter</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs/CollectionBin.html#/s:ST7ElementQa">Element</a></span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/BinUpdateResult.html">BinUpdateResult</a></span><span class="o">&lt;</span><span class="kt">CollectionBin</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>element</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Element</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>unique</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>CollectionFilter<Element>  closure that  defines the uniqueness of the element</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>compare</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>CollectionFilter<Element> closure that  defines the changes of the element</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code><a href="../Structs/BinUpdateResult.html">BinUpdateResult&lt;CollectionBin&gt;</a></code></p>
                       </div>
                     </section>
                   </div>
@@ -363,7 +531,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Recreates a new <code>CollectionBin</code> using the same Filter and Sorting but new collection of elelemts</p>
 
                       </div>
                       <div class="declaration">
@@ -373,6 +541,29 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updating</span><span class="p">(</span><span class="n">with</span> <span class="nv">elements</span><span class="p">:</span> <span class="kt">Backstorage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">CollectionBin</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>elements</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Collection of elements of type <code>Backstorage</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>CollectionBin</code></p>
                       </div>
                     </section>
                   </div>
@@ -403,7 +594,51 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The core function of this struct.</p>
+
+<p><strong>Note</strong>:</p>
+
+<ul>
+<li>Hash value is used to idenfy the unique element</li>
+<li>Conformance to <code>Equatable</code> is used to identify if an element has changed or not</li>
+</ul>
+
+<p><strong>Usage Example:</strong></p>
+<pre class="highlight swift"><code>  <span class="c1">//let's have a model  like</span>
+   <span class="kd">struct</span> <span class="kt">CollectionTestObjectMock</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
+        <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">ObjectStatus</span>
+        <span class="k">var</span> <span class="nv">rank</span><span class="p">:</span> <span class="kt">Int</span>
+
+
+        <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+        <span class="p">}</span>
+
+       <span class="c1">// -Note: since value and rank are a part of unique value of the object the only part that</span>
+       <span class="c1">// cab be changed is the status</span>
+        <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">CollectionTestObjectMock</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">CollectionTestObjectMock</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+            <span class="n">lhs</span><span class="o">.</span><span class="n">status</span>  <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">status</span>
+        <span class="p">}</span>
+   <span class="p">}</span>
+
+</code></pre>
+
+<p>Then the call of the function might look like:</p>
+<pre class="highlight swift"><code> <span class="k">let</span> <span class="nv">newElement</span> <span class="o">=</span> <span class="kt">CollectionTestObjectMock</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"TEST"</span><span class="p">,</span>
+                                           <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
+                                           <span class="nv">rank</span><span class="p">:</span> <span class="mi">150</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">result</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="nf">updating</span><span class="p">(</span><span class="n">newElement</span><span class="p">)</span>
+</code></pre>
+
+<p>NOTE:  The method will try to look for an element with &ldquo;TEST&rdquo; value and rank 150 (since they participate in hash value)</p>
+
+<ul>
+<li>if the element exists then based on Hash value  it will update an element or will do noting</li>
+<li>if the element exists but doest pass filter function of the Bin, the element will be removed</li>
+<li>if the element exists, passed filter function but not equal to existed one, it will be updated, otherwise no operation is performed</li>
+</ul>
 
                       </div>
                       <div class="declaration">
@@ -413,6 +648,29 @@
                           <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">updating</span><span class="p">(</span><span class="n">_</span> <span class="nv">element</span><span class="p">:</span> <span class="kt"><a href="../Structs/CollectionBin.html#/s:ST7ElementQa">Element</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Structs/BinUpdateResult.html">BinUpdateResult</a></span><span class="o">&lt;</span><span class="kt">CollectionBin</span><span class="o">&gt;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>element</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Element as <code>Hashable</code> and <code>Equatable</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code><a href="../Structs/BinUpdateResult.html">BinUpdateResult&lt;CollectionBin&gt;</a></code></p>
                       </div>
                     </section>
                   </div>
@@ -443,7 +701,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Provides convenient description for debug purposes</p>
 
                       </div>
                       <div class="declaration">

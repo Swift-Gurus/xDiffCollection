@@ -15,62 +15,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionBin.swift",
-      "line": 77,
-      "symbol": "CollectionBin.init(collection:filter:sort:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionBin.swift",
-      "line": 94,
-      "symbol": "CollectionBin.updating(_:whereUnique:whereCompare:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionBin.swift",
-      "line": 114,
-      "symbol": "CollectionBin.updating(with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionBin.swift",
-      "line": 170,
-      "symbol": "CollectionBin.updating(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionBin.swift",
-      "line": 176,
-      "symbol": "CollectionBin.description",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionChanges.swift",
-      "line": 23,
-      "symbol": "CollectionChanges.updatedIndexes",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionChanges.swift",
-      "line": 24,
-      "symbol": "CollectionChanges.removedIndexes",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/CollectionChanges.swift",
-      "line": 25,
-      "symbol": "CollectionChanges.addedIndexes",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
       "line": 13,
       "symbol": "DiffCollectionResult",
@@ -79,134 +23,29 @@
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 15,
+      "line": 16,
       "symbol": "DiffCollection",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 17,
-      "symbol": "Diff",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 30,
+      "line": 110,
       "symbol": "Diff.IndexType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 34,
+      "line": 114,
       "symbol": "Diff.init(collection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 51,
-      "symbol": "Diff.subscript(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.subscript",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 56,
-      "symbol": "Diff.numberOfElements(at:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 76,
-      "symbol": "DiffCollection",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 78,
-      "symbol": "DiffCollection.init(filters:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 86,
-      "symbol": "DiffCollection.updating(with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 123,
-      "symbol": "Diff",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 125,
-      "symbol": "Diff",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 128,
-      "symbol": "Diff.update(with:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 134,
-      "symbol": "Diff.updating(using:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollectionFilter.swift",
-      "line": 10,
-      "symbol": "DiffCollectionSort",
-      "symbol_kind": "source.lang.swift.decl.typealias",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollectionFilter.swift",
-      "line": 12,
-      "symbol": "DiffCollectionFilter",
-      "symbol_kind": "source.lang.swift.decl.struct",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollectionFilter.swift",
-      "line": 13,
-      "symbol": "DiffCollectionFilter.name",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollectionFilter.swift",
-      "line": 14,
-      "symbol": "DiffCollectionFilter.filter",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollectionFilter.swift",
-      "line": 15,
-      "symbol": "DiffCollectionFilter.sort",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollectionFilter.swift",
-      "line": 17,
-      "symbol": "DiffCollectionFilter.init(name:filter:sort:)",
+      "line": 208,
+      "symbol": "Diff.updating(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }

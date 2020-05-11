@@ -62,6 +62,7 @@ public typealias DiffCollection<T> = Diff<T, [CollectionBin<[T]>]> where T: Hash
        }
     ````
     - Define filters for sections:
+ 
     ````
          let startsARankSorted = DiffCollectionFilter<TestObject>(name: "Starts with a",
                                                                   filter: { $0.value.starts(with: "a") },
@@ -73,12 +74,14 @@ public typealias DiffCollection<T> = Diff<T, [CollectionBin<[T]>]> where T: Hash
     ````
         
     - initialize `Diff`
+ 
     ````
         var diffCollection = [startsARankSorted, startedBValueSorted]
  
     ````
     
     - Start using by calling upade function
+ 
     ````
         let elementA = TestObject(value: "Arm",
                                   status: .new,

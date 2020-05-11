@@ -1,91 +1,91 @@
 # xDiffCollection
-
-[![Version](https://img.shields.io/cocoapods/v/SwiftyCollection.svg?style=flat)](https://cocoapods.org/pods/xDiffCollection)
+[![Build Status](https://app.bitrise.io/app/0cd2520108d5ffa0/status.svg?token=6rT8f0dG3yMAqW9NyiUalg&branch=master)](https://app.bitrise.io/app/0cd2520108d5ffa0)
 [![License](https://img.shields.io/cocoapods/l/SwiftyCollection.svg?style=flat)](https://cocoapods.org/pods/xDiffCollection)
-[![Platform](https://img.shields.io/cocoapods/p/SwiftyCollection.svg?style=flat)](https://cocoapods.org/pods/xDiffCollection)
+[![Documentation](https://swift-gurus.github.io/xDiffCollection/badge.svg)](https://swift-gurus.github.io/xDiffCollection)
+
 
 ## Description
-xDiffCollection operates on the concept of bins. A bin is an array and a filter. 
-Elements that go in those bins are hashable identifiable and equatable differentiable.
-The filter accepts elements into a bin based on a custom logic provided via a boolean closure.
+`Diff` is a concept of a container for multiple collections and provides methods to access elements of those collections
+  *Example*:
+   ````swift
+       let names = ["Adams", "Bryant", "Channing"]
+       let cars = ["Ford", "Dodge"]
+       let collection = Diff([names,cars])
+       let subSequence = collection[1]
+       print(subSequence)
+       // ["Ford", "Dodge"]
+   
+       let element = collection[IndexPath(row: 0,section: 1)]
+       print(element)
+       // "Ford"
+   ````
 
-xDiffCollection exposes two operations: update and delete (update can also add an element if the element passes the test and 
-the element is not previously there)
 
-If the element was already there and an update operation is performed, the logic in the bin is re-run to decide if this is 
-still the appropriate bin for that updated element or not. If it is not, the element is deleted from the current bin and moved
-to a bin where the updated element passes another's bin logic.
+ Contains a very powerful **extension** for `Diff`where  `C` == [`CollectionBin<[T]>`] that
+ provides logic for updating element and putting it in propper subcollections of type `CollectionBin<[T]>`
 
-### Main Mutating Methods 
-- `mutating func update(element:T) -> DiffCollectionResult`
-- `mutating func delete(element:T) -> DiffCollectionResult`
+ An update operation returns `DiffCollectionSnapshot<T>` containing modifications made to the collection and
+ its subcollections.
 
-### Element Accessing Methods
-- `func element(atIndexPath path: IndexPath) -> T?`
-- `func numberOfElements(inSection binIndex:Int) -> Int`
-- `func numberOfSections() -> Int`
+   **Usage Example**
+   - Define a model
+   ````swift
+      //let's have a model like
+      struct TestObject: Hashable, Equatable {
+           var value: String
+           var status: ObjectStatus
+           var rank: Int
 
-## Example
-After installing xDiffCollection, just include it via:
-```ruby
-import xDiffCollection
-```
-Create some DiffCollectionFilters:
-```ruby
-let f1 = DiffCollectionFilter<TestObject>(name: "Starts with a", filter:{ s in
-    if(s.value.starts(with: "a")) {
-        return true
-    }
-    return false
-})
-        
-let f2 = DiffCollectionFilter<TestObject>(name: "Starts with b", filter:{ s in
-    if(s.value.starts(with: "b")) {
-        return true
-    }
-    return false
-})
+           
+           func hash(into hasher: inout Hasher) {
+               hasher.combine(value)
+               hasher.combine(rank)
+           }
 
-let f3 = DiffCollectionFilter<TestObject>(name: "Starts with c", filter:{ s in
-    if(s.value.starts(with: "c")) {
-        return true
-    }
-    return false
-})
-```
-Instanciate your collection using those filters:
-```ruby
-let myCollection = DiffCollection(filters: [f1,f2,f3])
-```
-And start using your collection:
+          // -Note: since value and rank are a part of unique value of the object the only part that
+          // cab be changed is the status
+           static func == (lhs: Self, rhs: Self) -> Bool {
+               lhs.status  == rhs.status
+           }
+      }
+   ````
+   - Define filters for sections:
+   
+   ````swift
+        let startsARankSorted = DiffCollectionFilter<TestObject>(name: "Starts with a",
+                                                                 filter: { $0.value.starts(with: "a") },
+                                                                 sort: { $0.rank > $1.rank })
 
-```ruby
-let result : DiffCollectionResult = myCollection.update(element: TestObject())
-```
-Where
+        let startedBValueSorted = DiffCollectionFilter<TestObject>(name: "Starts with b",
+                                                                   filter: { $0.value.starts(with: "b") },
+                                                                   sort: { $0.value > $1.value })
+   ````
+       
+   - initialize `Diff`
+   
+   ````swift
+       var diffCollection = [startsARankSorted, startedBValueSorted]
 
-```ruby
-public struct DiffCollectionResult {
-    public var deleted: [IndexPath]
-    public var added: [IndexPath]
-    public var updated: [IndexPath]
-}
-```
-And IndexPath.section represents the storage bin in myCollection,
-and IndexPath.row the position of an element within its bin. 
+   ````
+   
+   - Start using by calling upade function
+   
+   ````swift
+       let elementA = TestObject(value: "Arm",
+                                 status: .new,
+                                 rank: 100)
+       let snapshot = diffCollection.update(with: elementA)
+       debugPrint(snapshot.changes)
+       // updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]
+       
+   ````
 
-## Installation
-
-xDiffCollection is available through [CocoaPods](https://cocoapods.org). To install
-it, simply add the following line to your Podfile:
-
-```ruby
-pod 'xDiffCollection'
-```
+## Documentaion 
+For more information check the [documentaion page](https://swift-gurus.github.io/xDiffCollection/)
 
 ## Author
 
-ALDO Inc., aldodev@aldogroup.com
+Swift-Gurus Inc., alexei.hmelevski@gmail.com
 
 ## License
 

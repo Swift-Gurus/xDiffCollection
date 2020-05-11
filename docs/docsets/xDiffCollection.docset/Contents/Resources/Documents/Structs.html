@@ -275,30 +275,33 @@ Indexes are represented by any colection:</p>
        <span class="p">}</span>
   <span class="p">}</span>
 </code></pre></li>
-<li><p>Define filters for sections:</p>
-<pre class="highlight swift"><code>    <span class="k">let</span> <span class="nv">startsARankSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with a"</span><span class="p">,</span>
-                                                             <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"a"</span><span class="p">)</span> <span class="p">},</span>
-                                                             <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">rank</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">rank</span> <span class="p">})</span>
-
-    <span class="k">let</span> <span class="nv">startedBValueSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with b"</span><span class="p">,</span>
-                                                               <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"b"</span><span class="p">)</span> <span class="p">},</span>
-                                                               <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">value</span> <span class="p">})</span>
-</code></pre></li>
-<li><p>initialize <code>Diff</code></p>
-<pre class="highlight swift"><code>   <span class="k">var</span> <span class="nv">diffCollection</span> <span class="o">=</span> <span class="p">[</span><span class="n">startsARankSorted</span><span class="p">,</span> <span class="n">startedBValueSorted</span><span class="p">]</span>
-</code></pre></li>
+<li><p>Define filters for sections:</p></li>
 </ul>
-<pre class="highlight swift"><code>
-   <span class="o">-</span> <span class="kt">Start</span> <span class="n">using</span> <span class="n">by</span> <span class="n">calling</span> <span class="n">upade</span> <span class="n">function</span>
+<pre class="highlight swift"><code>       <span class="k">let</span> <span class="nv">startsARankSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with a"</span><span class="p">,</span>
+                                                                <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"a"</span><span class="p">)</span> <span class="p">},</span>
+                                                                <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">rank</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">rank</span> <span class="p">})</span>
+
+       <span class="k">let</span> <span class="nv">startedBValueSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with b"</span><span class="p">,</span>
+                                                                  <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"b"</span><span class="p">)</span> <span class="p">},</span>
+                                                                  <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">value</span> <span class="p">})</span>
 </code></pre>
-<pre class="highlight swift"><code>   <span class="k">let</span> <span class="nv">elementA</span> <span class="o">=</span> <span class="kt">TestObject</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"Arm"</span><span class="p">,</span>
-                             <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
-                             <span class="nv">rank</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
-   <span class="k">let</span> <span class="nv">snapshot</span> <span class="o">=</span> <span class="n">diffCollection</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">elementA</span><span class="p">)</span>
-   <span class="nf">debugPrint</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">changes</span><span class="p">)</span>
-   <span class="c1">// updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]</span>
+
+<ul>
+<li>initialize <code>Diff</code></li>
+</ul>
+<pre class="highlight swift"><code>       <span class="k">var</span> <span class="nv">diffCollection</span> <span class="o">=</span> <span class="p">[</span><span class="n">startsARankSorted</span><span class="p">,</span> <span class="n">startedBValueSorted</span><span class="p">]</span>
 </code></pre>
-<pre class="highlight swift"><code></code></pre>
+
+<ul>
+<li>Start using by calling upade function</li>
+</ul>
+<pre class="highlight swift"><code>       <span class="k">let</span> <span class="nv">elementA</span> <span class="o">=</span> <span class="kt">TestObject</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"Arm"</span><span class="p">,</span>
+                                 <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
+                                 <span class="nv">rank</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+       <span class="k">let</span> <span class="nv">snapshot</span> <span class="o">=</span> <span class="n">diffCollection</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">elementA</span><span class="p">)</span>
+       <span class="nf">debugPrint</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">changes</span><span class="p">)</span>
+       <span class="c1">// updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]</span>
+</code></pre>
 
                         <a href="Structs/Diff.html" class="slightly-smaller">See more</a>
                       </div>

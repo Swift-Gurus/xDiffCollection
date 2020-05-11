@@ -30,21 +30,21 @@
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 110,
+      "line": 111,
       "symbol": "Diff.IndexType",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 114,
+      "line": 115,
       "symbol": "Diff.init(collection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ahmelevski.cg.ide/Developer/SwiftGurus/xDiffCollection/Sources/xDiffCollection/DiffCollection.swift",
-      "line": 208,
+      "line": 209,
       "symbol": "Diff.updating(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

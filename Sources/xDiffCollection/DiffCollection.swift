@@ -62,26 +62,25 @@ public typealias DiffCollection<T> = Diff<T, [CollectionBin<[T]>]> where T: Hash
        }
     ````
     - Define filters for sections:
- 
+
     ````
-         let startsARankSorted = DiffCollectionFilter<TestObject>(name: "Starts with a",
-                                                                  filter: { $0.value.starts(with: "a") },
-                                                                  sort: { $0.rank > $1.rank })
- 
-         let startedBValueSorted = DiffCollectionFilter<TestObject>(name: "Starts with b",
-                                                                    filter: { $0.value.starts(with: "b") },
-                                                                    sort: { $0.value > $1.value })
+        let startsARankSorted = DiffCollectionFilter<TestObject>(name: "Starts with a",
+                                                                 filter: { $0.value.starts(with: "a") },
+                                                                 sort: { $0.rank > $1.rank })
+
+        let startedBValueSorted = DiffCollectionFilter<TestObject>(name: "Starts with b",
+                                                                   filter: { $0.value.starts(with: "b") },
+                                                                   sort: { $0.value > $1.value })
     ````
         
     - initialize `Diff`
- 
+
     ````
         var diffCollection = [startsARankSorted, startedBValueSorted]
- 
     ````
-    
+
     - Start using by calling upade function
- 
+
     ````
         let elementA = TestObject(value: "Arm",
                                   status: .new,
@@ -89,7 +88,6 @@ public typealias DiffCollection<T> = Diff<T, [CollectionBin<[T]>]> where T: Hash
         let snapshot = diffCollection.update(with: elementA)
         debugPrint(snapshot.changes)
         // updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]
-        
     ````
  */
 public struct Diff<T, C>: Collection where

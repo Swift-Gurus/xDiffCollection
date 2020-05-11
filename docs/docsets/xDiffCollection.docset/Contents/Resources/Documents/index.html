@@ -74,23 +74,23 @@
             
             <h1 id='xdiffcollection' class='heading'>xDiffCollection</h1>
 
-<p><a href="https://cocoapods.org/pods/xDiffCollection"><img src="https://img.shields.io/cocoapods/v/SwiftyCollection.svg?style=flat" alt="Version"></a>
+<p><a href="https://app.bitrise.io/app/0cd2520108d5ffa0"><img src="https://app.bitrise.io/app/0cd2520108d5ffa0/status.svg?token=6rT8f0dG3yMAqW9NyiUalg&branch=master" alt="Build Status"></a>
 <a href="https://cocoapods.org/pods/xDiffCollection"><img src="https://img.shields.io/cocoapods/l/SwiftyCollection.svg?style=flat" alt="License"></a>
-<a href="https://cocoapods.org/pods/xDiffCollection"><img src="https://img.shields.io/cocoapods/p/SwiftyCollection.svg?style=flat" alt="Platform"></a></p>
+<a href="https://swift-gurus.github.io/xDiffCollection"><img src="https://swift-gurus.github.io/xDiffCollection/badge.svg" alt="Documentation"></a></p>
 <h2 id='description' class='heading'>Description</h2>
 
 <p><code><a href="Structs/Diff.html">Diff</a></code> is a concept of a container for multiple collections and provides methods to access elements of those collections
   <em>Example</em>:</p>
-<pre class="highlight plaintext"><code>       let names = ["Adams", "Bryant", "Channing"]
-       let cars = ["Ford", "Dodge"]
-       let collection = Diff([names,cars])
-       let subSequence = collection[1]
-       print(subSequence)
-       // ["Ford", "Dodge"]
+<pre class="highlight swift"><code>       <span class="k">let</span> <span class="nv">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Adams"</span><span class="p">,</span> <span class="s">"Bryant"</span><span class="p">,</span> <span class="s">"Channing"</span><span class="p">]</span>
+       <span class="k">let</span> <span class="nv">cars</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Ford"</span><span class="p">,</span> <span class="s">"Dodge"</span><span class="p">]</span>
+       <span class="k">let</span> <span class="nv">collection</span> <span class="o">=</span> <span class="kt">Diff</span><span class="p">([</span><span class="n">names</span><span class="p">,</span><span class="n">cars</span><span class="p">])</span>
+       <span class="k">let</span> <span class="nv">subSequence</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+       <span class="nf">print</span><span class="p">(</span><span class="n">subSequence</span><span class="p">)</span>
+       <span class="c1">// ["Ford", "Dodge"]</span>
 
-       let element = collection[IndexPath(row: 0,section: 1)]
-       print(element)
-       // "Ford"
+       <span class="k">let</span> <span class="nv">element</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="kt">IndexPath</span><span class="p">(</span><span class="nv">row</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span><span class="nv">section</span><span class="p">:</span> <span class="mi">1</span><span class="p">)]</span>
+       <span class="nf">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+       <span class="c1">// "Ford"</span>
 </code></pre>
 
 <p>Contains a very powerful <strong>extension</strong> for <code><a href="Structs/Diff.html">Diff</a></code>where  <code>C</code> == [<code><a href="Structs/CollectionBin.html">CollectionBin&lt;[T]&gt;</a></code>] that
@@ -103,57 +103,62 @@
 
 <ul>
 <li><p>Define a model</p>
-<pre class="highlight plaintext"><code>  //let's have a model like
-  struct TestObject: Hashable, Equatable {
-       var value: String
-       var status: ObjectStatus
-       var rank: Int
+<pre class="highlight swift"><code>  <span class="c1">//let's have a model like</span>
+  <span class="kd">struct</span> <span class="kt">TestObject</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Equatable</span> <span class="p">{</span>
+       <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span>
+       <span class="k">var</span> <span class="nv">status</span><span class="p">:</span> <span class="kt">ObjectStatus</span>
+       <span class="k">var</span> <span class="nv">rank</span><span class="p">:</span> <span class="kt">Int</span>
 
-       func hash(into hasher: inout Hasher) {
-           hasher.combine(value)
-           hasher.combine(rank)
-       }
+       <span class="kd">func</span> <span class="nf">hash</span><span class="p">(</span><span class="n">into</span> <span class="nv">hasher</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">Hasher</span><span class="p">)</span> <span class="p">{</span>
+           <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+           <span class="n">hasher</span><span class="o">.</span><span class="nf">combine</span><span class="p">(</span><span class="n">rank</span><span class="p">)</span>
+       <span class="p">}</span>
 
-      // -Note: since value and rank are a part of unique value of the object the only part that
-      // cab be changed is the status
-       static func == (lhs: Self, rhs: Self) -&gt; Bool {
-           lhs.status  == rhs.status
-       }
-  }
+      <span class="c1">// -Note: since value and rank are a part of unique value of the object the only part that</span>
+      <span class="c1">// cab be changed is the status</span>
+       <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="k">Self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+           <span class="n">lhs</span><span class="o">.</span><span class="n">status</span>  <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="n">status</span>
+       <span class="p">}</span>
+  <span class="p">}</span>
 </code></pre></li>
-<li><p>Define filters for sections:</p>
-<pre class="highlight plaintext"><code>    let startsARankSorted = DiffCollectionFilter&lt;TestObject&gt;(name: "Starts with a",
-                                                             filter: { $0.value.starts(with: "a") },
-                                                             sort: { $0.rank &gt; $1.rank })
-
-    let startedBValueSorted = DiffCollectionFilter&lt;TestObject&gt;(name: "Starts with b",
-                                                               filter: { $0.value.starts(with: "b") },
-                                                               sort: { $0.value &gt; $1.value })
-</code></pre></li>
-<li><p>initialize <code><a href="Structs/Diff.html">Diff</a></code></p>
-<pre class="highlight plaintext"><code>   var diffCollection = [startsARankSorted, startedBValueSorted]
-</code></pre></li>
+<li><p>Define filters for sections:</p></li>
 </ul>
-<pre class="highlight plaintext"><code>
-   - Start using by calling upade function
+<pre class="highlight swift"><code>        <span class="k">let</span> <span class="nv">startsARankSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with a"</span><span class="p">,</span>
+                                                                 <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"a"</span><span class="p">)</span> <span class="p">},</span>
+                                                                 <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">rank</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">rank</span> <span class="p">})</span>
+
+        <span class="k">let</span> <span class="nv">startedBValueSorted</span> <span class="o">=</span> <span class="kt">DiffCollectionFilter</span><span class="o">&lt;</span><span class="kt">TestObject</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Starts with b"</span><span class="p">,</span>
+                                                                   <span class="nv">filter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="nf">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"b"</span><span class="p">)</span> <span class="p">},</span>
+                                                                   <span class="nv">sort</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="nv">$1</span><span class="o">.</span><span class="n">value</span> <span class="p">})</span>
 </code></pre>
-<pre class="highlight plaintext"><code>   let elementA = TestObject(value: "Arm",
-                             status: .new,
-                             rank: 100)
-   let snapshot = diffCollection.update(with: elementA)
-   debugPrint(snapshot.changes)
-   // updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]
+
+<ul>
+<li>initialize <code><a href="Structs/Diff.html">Diff</a></code></li>
+</ul>
+<pre class="highlight swift"><code>       <span class="k">var</span> <span class="nv">diffCollection</span> <span class="o">=</span> <span class="p">[</span><span class="n">startsARankSorted</span><span class="p">,</span> <span class="n">startedBValueSorted</span><span class="p">]</span>
+
 </code></pre>
-<pre class="highlight plaintext"><code>
 
-## Author
+<ul>
+<li>Start using by calling upade function</li>
+</ul>
+<pre class="highlight swift"><code>       <span class="k">let</span> <span class="nv">elementA</span> <span class="o">=</span> <span class="kt">TestObject</span><span class="p">(</span><span class="nv">value</span><span class="p">:</span> <span class="s">"Arm"</span><span class="p">,</span>
+                                 <span class="nv">status</span><span class="p">:</span> <span class="o">.</span><span class="k">new</span><span class="p">,</span>
+                                 <span class="nv">rank</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+       <span class="k">let</span> <span class="nv">snapshot</span> <span class="o">=</span> <span class="n">diffCollection</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">elementA</span><span class="p">)</span>
+       <span class="nf">debugPrint</span><span class="p">(</span><span class="n">snapshot</span><span class="o">.</span><span class="n">changes</span><span class="p">)</span>
+       <span class="c1">// updatedIndexes = [], removedIndexes = [], addedIndexes = [IndexPath(row: 0, section: 0)]</span>
 
-Swift-Gurus Inc., alexei.hmelevski@gmail.com
-
-## License
-
-xDiffCollection is available under the MIT license. See the LICENSE file for more info.
 </code></pre>
+<h2 id='documentaion' class='heading'>Documentaion</h2>
+
+<p>For more information check the <a href="https://swift-gurus.github.io/xDiffCollection/">documentaion page</a></p>
+<h2 id='author' class='heading'>Author</h2>
+
+<p>Swift-Gurus Inc., <a href="mailto:alexei.hmelevski@gmail.com">alexei.hmelevski@gmail.com</a></p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>xDiffCollection is available under the MIT license. See the LICENSE file for more info.</p>
 
           </section>
         </section>
